@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Küche - Bestellungen vom {{ date_filter.split('-')[2] }}.{{ date_filter.split('-')[1] }}.{{ date_filter.split('-')[0] }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Druck-Anpassung für die Küche */
+        @media print {
+            body, * {
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                box-shadow: 0 !important;
+                color: black !important;
+            }
+            /* Alles Unwichtige ausblenden*/
+            .logo, .filter-form, button, a, p {
+                display: none !important;
+                width: 0 !important;
+                height: 0 !important;
+            }
+            h1 {
+                text-align: left !important;
+                border: 0 !important;
+                border-bottom: 1px solid black !important;
+            }
+            td, tr, th, .list-title {
+                border: 1px solid black !important;
+                text-align: left !important;
+            }
+            td, th {
+                padding-left: .25rem !important;
+            }
+            li {
+                border-bottom: 1px solid black !important;
+                border-left: 1px solid black !important;
+                border-right: 1px solid black !important;
+            }
+            /* Gesamtzahl-Information verkleinert */
+            ul {
+                border: 0 !important;
+                max-width: 200px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+        <div class="main-section">
+<div class="logo">
+    <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo Ruhesitz Wetterstein" width="300">
+</div>
+<h1>Küche - Bestellungen vom {{ date_filter.split('-')[2] }}.{{ date_filter.split('-')[1] }}.{{ date_filter.split('-')[0] }}</h1>
+
+
+<form method="GET" action="/overview" class="filter-form" onchange="event.preventDefault(); this.closest('form').submit();">
+    <p>
+    Wählen Sie das Datum aus, zu dem Sie die Bestellungen ansehen und ggf. ausdrucken möchten.
+    </p>
+    <div class="form-group">
+        <label for "date"><b>Datum</b></label>
+        <input type="date" id="date" name="date" value="{{ date_filter }}">
+    </div>
+</form>
+<div class="button-bar">
+    <a href="/" class="secondary">← Zurück</a>
+    <a onclick="event.preventDefault(); window.print();">Übersicht Mittagessen drucken ↩</a>
+    <a onclick="event.preventDefault(); window.print();">Übersicht Abendessen drucken ↩</a>
+</div>
+<br>
+
+<h2>Mittagessen</h2>
+<table>
+    <tr>
+        <th>Zimmer</th>
+        <th>Name</th>
+        <th>Auswahl</th>
+        <th>Hinweise</th>
+        <!--<th>Datum</th>-->
+    </tr>
+
+    {% for order in orders %}
+    <tr>
+        <td>{{ order.room }}</td>
+        <td>{{ order.resident_name }}</td>
+
+        <td class="meal">
+            {{ order.lunch or "-/-" }}
+        </td>
+
+        <td>{{ order.notes or "-/-" }}</td>
+
+        <!--<td>{{ order.timestamp }}</td>-->
+    </tr>
+    {% endfor %}
+
+</table>
+<br>
+<h3>Insgesamt</h3>
+<table>
+    <tr>
+        <th>Auswahl</th>
+        <th>Anzahl</th>
+    </tr>
+
+    {% for meal, count in lunch_stats.items() %}
+    <tr>
+        {% if meal != "Kein Essen" %}
+        <td>{{ meal }}</td>
+        <td>{{ count }}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+<br><br>
+<h2>Abendessen</h2>
+<table>
+    <tr>
+        <th>Zimmer</th>
+        <th>Name</th>
+        <th>Auswahl</th>
+        <th>Hinweise</th>
+        <!--<th>Datum</th>-->
+    </tr>
+
+    {% for order in orders %}
+    <tr>
+        <td>{{ order.room }}</td>
+        <td>{{ order.resident_name }}</td>
+
+        <td class="meal">
+            {{ order.dinner or "-/-" }}
+        </td>
+
+        <td>{{ order.notes or "-/-" }}</td>
+
+        <!--<td>{{ order.timestamp }}</td>-->
+    </tr>
+    {% endfor %}
+
+</table>
+<br>
+<h3>Insgesamt</h3>
+<table>
+    <tr>
+        <th>Essen</th>
+        <th>Anzahl</th>
+    </tr>
+
+    {% for meal, count in dinner_stats.items() %}
+    <tr>
+        {% if meal != "Kein Essen" %}
+        <td>{{ meal }}</td>
+        <td>{{ count }}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+</div>
+</body>
+</html>

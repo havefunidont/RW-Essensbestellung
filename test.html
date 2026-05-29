@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bewohnerbefragung - Bestellungen erfassen</title>
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --primary-hover: #004085;
+            --success-color: #28a745;
+            --success-bg: #e8f5e9;
+            --neutral-light: #f8f9fa;
+            --text-main: #333333;
+            --text-muted: #6c757d;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --radius: 8px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--neutral-light);
+            padding-bottom: 20px;
+        }
+
+        .logo img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #1a202c;
+            margin: 0 0 10px 0;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .filter-card {
+            background-color: var(--neutral-light);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .form-group select {
+            padding: 10px 12px;
+            font-size: 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background-color: #fff;
+            color: var(--text-main);
+            outline: none;
+            transition: border-color 0.2s;
+            cursor: pointer;
+        }
+
+        .form-group select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+        }
+
+        .list-header {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .resident-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .resident-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .resident-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .resident-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .resident-name-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .resident-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .status-badge {
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .status-badge.done {
+            background-color: var(--success-bg);
+            color: var(--success-color);
+        }
+
+        .status-badge.pending {
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .resident-details {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.2s, color 0.2s;
+            white-space: nowrap;
+        }
+
+        .action-button.primary {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+
+        .action-button.primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .action-button.secondary {
+            background-color: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+
+        .action-button.secondary:hover {
+            background-color: var(--neutral-light);
+            color: var(--text-main);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 30px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--text-main);
+        }
+
+        @media (max-width: 600px) {
+            .resident-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .action-button {
+                width: 100%;
+                justify-content: center;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header class="header-section">
+            <div class="logo">
+                <img src="https://via.placeholder.com/300x80?text=Logo+Ruhesitz+Wetterstein" alt="Logo Ruhesitz Wetterstein" width="300">
+            </div>
+            <h1>Bewohnerbefragung</h1>
+            <p class="subtitle">Wählen Sie die Station und die Woche aus, für die Sie die Bestellungen erfassen möchten.</p>
+        </header>
+
+        <section class="filter-card">
+            <form method="GET" action="#" class="filter-form">
+                <div class="form-group">
+                    <label for="station">Station auswählen</label>
+                    <select id="station" name="station">
+                        <option value="">Alle</option>
+                        <option value="Station A">Station A (Erdgeschoss)</option>
+                        <option value="Station B" selected>Station B (1. Stock)</option>
+                        <option value="Station C">Station C (2. Stock)</option>
+                    </select>
+                </div>
+            </form>
+        </section>
+
+        <main>
+            <div class="list-header">Liste der Bewohner</div>
+            
+            <ul class="resident-list">
+                
+                <li class="resident-card">
+                    <div class="resident-info">
+                        <div class="resident-name-row">
+                            <span class="resident-name">Anna Müller</span>
+                            <span class="status-badge done">✓ Erledigt</span>
+                        </div>
+                        <div class="resident-details">
+                            Station B &nbsp;|&nbsp; Zimmer 104
+                        </div>
+                    </div>
+                    <div>
+                        <a class="action-button secondary" href="#">
+                            Bestellung anpassen →
+                        </a>
+                    </div>
+                </li>
+
+                <li class="resident-card">
+                    <div class="resident-info">
+                        <div class="resident-name-row">
+                            <span class="resident-name">Hans Schmidt</span>
+                            <span class="status-badge pending">○ Offen</span>
+                        </div>
+                        <div class="resident-details">
+                            Station B &nbsp;|&nbsp; Zimmer 108
+                        </div>
+                    </div>
+                    <div>
+                        <a class="action-button primary" href="#">
+                            Bestellung erfassen →
+                        </a>
+                    </div>
+                </li>
+
+                <li class="resident-card">
+                    <div class="resident-info">
+                        <div class="resident-name-row">
+                            <span class="resident-name">Hildegard Weber</span>
+                            <span class="status-badge pending">○ Offen</span>
+                        </div>
+                        <div class="resident-details">
+                            Station B &nbsp;|&nbsp; Zimmer 112
+                        </div>
+                    </div>
+                    <div>
+                        <a class="action-button primary" href="#">
+                            Bestellung erfassen →
+                        </a>
+                    </div>
+                </li>
+
+            </ul>
+        </main>
+
+        <a href="#" class="back-link">← Zurück zur Startseite</a>
+
+    </div>
+
+</body>
+</html>
