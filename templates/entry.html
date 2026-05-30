@@ -14,7 +14,7 @@
     </div>
     <h1>Bewohnerbefragung - Bestellungen erfassen</h1>
     <form method="GET" action="/entry" class="filter-form" onchange="this.submit()">
-        <p>Wählen Sie die Station und die Woche aus, für die Sie die Bestellungen erfassen möchten und wählen Sie den gewünschten Status aus.</p>
+        <p>Wählen Sie die Station sowie den Bearbeitungsstatus aus, um die Bewohnerliste zu filtern.</p>
 
         <div class="form-group">
             <label for="station"><b>Station</b></label>
@@ -32,7 +32,7 @@
             <select id="status" name="status">
                 <option value="" {% if status_filter == "" %}selected{% endif %}>Alle</option>
                 <option value="offen" {% if status_filter == "offen" %}selected{% endif %}>Offen</option>
-                <option value="erledigt" {% if status_filter == "erledigt" %}selected{% endif %}>Erledigt</option>
+                <option value="erledigt" {% if status_filter == "erledigt" %}selected{% endif %}>Erfasst</option>
             </select>
         </div>
     </form>
@@ -53,12 +53,12 @@
         </div>
         {% for resident in residents %}
             <li>
-                <div>
+                <div class="resident-information">
                     <span class="resident-name"> {{ resident.name }} </span>                     
                     {% if resident.done %}
-                        <span class="status-finished">✓ Erledigt</span>
+                        <span class="status-finished">✓ Bestellung erfasst</span>
                     {% else %}
-                        <span class="status-pending">○ Offen</span>
+                        <span class="status-pending">○ Bestellung offen</span>
                     {% endif %}
                     <div class="resident-details">
                     {{ resident.station }}
