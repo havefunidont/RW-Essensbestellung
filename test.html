@@ -3,323 +3,372 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bewohnerbefragung - Bestellungen erfassen</title>
+    <title>Wetterstein - Testumgebung</title>
     <style>
+        /* =========================================
+           INTERNES SYSTEM - COMBINED STYLE FOR TESTING
+           ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            --primary-color: #0056b3;
-            --primary-hover: #004085;
+            --bg: #f6f4ef;              /* warmes Off-White, leicht creme */
+            --surface: #ffffff;         /* bleibt clean für Eleganz */
+            --text: #1c1c1c;            /* leicht wärmeres Schwarz */
+            
+            --primary: #a8c5f0;         /* Soft-Blau für Akzente */
+            --primary-text: #0f2d5b; 
+            --secondary: #e2e8f0;       /* warmes Grau statt kühles Grau */
+            --secondary-text: #6f6f6f;
+
+            --text-muted: #6c757d;
+            --neutral-light: #f8f9fa;
+
+            --border: #e6e0d6;          /* weicher, warmer Rahmen */
+            --hover: #f3efe7;           /* subtil warmes Hover */
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
             --success-color: #28a745;
             --success-bg: #e8f5e9;
-            --neutral-light: #f8f9fa;
-            --text-main: #333333;
-            --text-muted: #6c757d;
-            --border-color: #e0e0e0;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            --radius: 8px;
+
+            --max-width: 900px;
+            --gap: .5rem;
         }
 
+        /* Body */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f6f9;
-            color: var(--text-main);
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
+            max-width: var(--max-width);
             margin: 0 auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
+            font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding: 40px 20px;
+            line-height: 1.65;
+            font-size: 16px;
         }
 
-        .header-section {
+        p {
             text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--neutral-light);
-            padding-bottom: 20px;
-        }
-
-        .logo img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 15px;
-        }
-
-        h1 {
-            font-size: 24px;
-            color: #1a202c;
-            margin: 0 0 10px 0;
-        }
-
-        .subtitle {
-            color: var(--text-muted);
-            margin: 0;
+            width: 100%;
+            margin-bottom: 1rem;
             font-size: 15px;
         }
 
-        .filter-card {
-            background-color: var(--neutral-light);
+        /* =========================
+           LISTEN (Bestellungen etc.)
+           ========================= */
+
+        .list-title {
+            background-color: var(--primary);
+            color: var(--primary-text);
+            text-align: center;
+            padding: 10px 0;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        ul {
+            list-style: none;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            border-left: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        li {
+            background: var(--surface);
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s ease;
+        }
+
+        li:hover {
+            background: var(--hover);
+        }
+
+        /* =========================
+            LOGO und HEADER
+           ========================= */
+
+        .logo {
+            max-width: var(--max-width);
+            background-color: #005a9b;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid var(--border);
+            border-left: 2px solid var(--border);
+            border-right: 2px solid var(--border);
+            color: white; /* Platzhalter-Farbe */
+        }
+
+        .logo-placeholder {
+            font-weight: bold;
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        .anniversary-placeholder {
+            border: 1px dashed white;
+            padding: 4px 8px;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+
+        /* Haupttitel */
+        h1 {
+            font-size: 24px;
+            letter-spacing: 0.5px;
+            color: var(--text);
+            background-color: var(--surface);
+            padding: 15px 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+            border-left: 2px solid var(--border);
+            border-right: 2px solid var(--border);
+            text-align: center;
+        }
+
+        /* =========================
+           LINKS / BUTTONS
+           ========================= */
+
+        a, .btn-mock {
+            font-family: inherit;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            letter-spacing: 0.4px;
+            text-decoration: none;
+            color: var(--primary-text);
+            background: var(--primary);
+            padding: 8px 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 4px;
+        }
+
+        a:hover, .btn-mock:hover {
+            border: 2px solid var(--primary-text);
+            background: #c3daf7;
+        }
+
+        .secondary {
+            background-color: var(--secondary);
+            color: var(--secondary-text);
+        }
+
+        .secondary:hover {
+            border: 2px solid var(--secondary-text);
+            background: #cbd5e1;
+        }
+
+        .change-button {
+            background-color: #f6f4ef;
+            color: #666;
+            border: 2px solid var(--border);
+        }
+
+        .change-button:hover {
+            border: 2px solid #666;
+            background: #e6e2d8;
+        }
+
+        /* =========================
+           FORMULARE / FILTER
+           ========================= */
+
+        .filter-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: flex-end;
             padding: 20px;
-            border-radius: var(--radius);
-            margin-bottom: 30px;
-            border: 1px solid var(--border-color);
+            margin-bottom: 25px;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            background-color: var(--neutral-light);
+            box-shadow: var(--shadow);
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
+            flex: 1;
+            min-width: 200px;
         }
 
         .form-group label {
-            font-weight: 600;
             font-size: 14px;
-            color: #4a5568;
+            color: var(--text);
         }
 
-        .form-group select {
-            padding: 10px 12px;
-            font-size: 16px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            background-color: #fff;
-            color: var(--text-main);
-            outline: none;
-            transition: border-color 0.2s;
-            cursor: pointer;
+        form select {
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--text);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 9px 14px;
+            min-height: 42px;
+            border-radius: 4px;
+            width: 100%;
         }
 
-        .form-group select:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+        /* =========================
+           STYLING ELEMENTE
+           ========================= */
+
+        .main-section {
+            background-color: var(--surface);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border-radius: 8px;
         }
 
-        .list-header {
-            font-size: 18px;
-            font-weight: 700;
-            color: #1a202c;
-            margin-bottom: 15px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .resident-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        .button-bar {
+            margin: 15px 0;
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .resident-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
-            padding: 16px 20px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .resident-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .resident-info {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .resident-name-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            justify-content: center;
         }
 
         .resident-name {
+            font-weight: bold;
+            margin-right: .5rem;
             font-size: 16px;
-            font-weight: 600;
-            color: #1a202c;
-        }
-
-        .status-badge {
-            font-size: 12px;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-weight: 500;
-        }
-
-        .status-badge.done {
-            background-color: var(--success-bg);
-            color: var(--success-color);
-        }
-
-        .status-badge.pending {
-            background-color: #e2e8f0;
-            color: #4a5568;
         }
 
         .resident-details {
             font-size: 13px;
             color: var(--text-muted);
+            margin-top: 4px;
         }
 
-        .action-button {
-            display: inline-flex;
-            align-items: center;
-            padding: 8px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: background-color 0.2s, color 0.2s;
-            white-space: nowrap;
+        .status-pending, .status-finished {
+            font-size: 13px;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-weight: bold;
+            display: inline-block;
         }
 
-        .action-button.primary {
-            background-color: var(--primary-color);
-            color: #ffffff;
+        .status-pending {
+            background-color: #e2e8f0;
+            color: #4a5568;
         }
 
-        .action-button.primary:hover {
-            background-color: var(--primary-hover);
+        .status-finished {
+            background-color: var(--success-bg);
+            color: var(--success-color);
         }
 
-        .action-button.secondary {
-            background-color: transparent;
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-        }
-
-        .action-button.secondary:hover {
-            background-color: var(--neutral-light);
-            color: var(--text-main);
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            margin-top: 30px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.2s;
-        }
-
-        .back-link:hover {
-            color: var(--text-main);
-        }
-
+        /* Responsive Grid */
         @media (max-width: 600px) {
-            .resident-card {
+            li {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 15px;
+                gap: 12px;
             }
-            .action-button {
+            
+            li a, .btn-mock {
                 width: 100%;
-                justify-content: center;
-                box-sizing: border-box;
+            }
+
+            .form-group {
+                min-width: 100%;
             }
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        
-        <header class="header-section">
-            <div class="logo">
-                <img src="https://via.placeholder.com/300x80?text=Logo+Ruhesitz+Wetterstein" alt="Logo Ruhesitz Wetterstein" width="300">
-            </div>
-            <h1>Bewohnerbefragung</h1>
-            <p class="subtitle">Wählen Sie die Station und die Woche aus, für die Sie die Bestellungen erfassen möchten.</p>
-        </header>
-
-        <section class="filter-card">
-            <form method="GET" action="#" class="filter-form">
-                <div class="form-group">
-                    <label for="station">Station auswählen</label>
-                    <select id="station" name="station">
-                        <option value="">Alle</option>
-                        <option value="Station A">Station A (Erdgeschoss)</option>
-                        <option value="Station B" selected>Station B (1. Stock)</option>
-                        <option value="Station C">Station C (2. Stock)</option>
-                    </select>
-                </div>
-            </form>
-        </section>
-
-        <main>
-            <div class="list-header">Liste der Bewohner</div>
-            
-            <ul class="resident-list">
-                
-                <li class="resident-card">
-                    <div class="resident-info">
-                        <div class="resident-name-row">
-                            <span class="resident-name">Anna Müller</span>
-                            <span class="status-badge done">✓ Erledigt</span>
-                        </div>
-                        <div class="resident-details">
-                            Station B &nbsp;|&nbsp; Zimmer 104
-                        </div>
-                    </div>
-                    <div>
-                        <a class="action-button secondary" href="#">
-                            Bestellung anpassen →
-                        </a>
-                    </div>
-                </li>
-
-                <li class="resident-card">
-                    <div class="resident-info">
-                        <div class="resident-name-row">
-                            <span class="resident-name">Hans Schmidt</span>
-                            <span class="status-badge pending">○ Offen</span>
-                        </div>
-                        <div class="resident-details">
-                            Station B &nbsp;|&nbsp; Zimmer 108
-                        </div>
-                    </div>
-                    <div>
-                        <a class="action-button primary" href="#">
-                            Bestellung erfassen →
-                        </a>
-                    </div>
-                </li>
-
-                <li class="resident-card">
-                    <div class="resident-info">
-                        <div class="resident-name-row">
-                            <span class="resident-name">Hildegard Weber</span>
-                            <span class="status-badge pending">○ Offen</span>
-                        </div>
-                        <div class="resident-details">
-                            Station B &nbsp;|&nbsp; Zimmer 112
-                        </div>
-                    </div>
-                    <div>
-                        <a class="action-button primary" href="#">
-                            Bestellung erfassen →
-                        </a>
-                    </div>
-                </li>
-
-            </ul>
-        </main>
-
-        <a href="#" class="back-link">← Zurück zur Startseite</a>
-
+<div class="main-section">
+    
+    <div class="logo">
+        <div class="logo-placeholder">RUHESITZ WETTERSTEIN</div>
+        <div class="anniversary-placeholder">50 Jahre</div>
     </div>
+    
+    <h1>Bewohnerbefragung - Bestellungen erfassen</h1>
+    
+    <form class="filter-form" onsubmit="return false;">
+        <p>Wählen Sie eine Station sowie einen Bearbeitungsstatus aus, um die Bewohnerliste zu filtern.</p>
 
+        <div class="form-group">
+            <label for="station"><b>Station</b></label>
+            <select id="station" name="station">
+                <option value="">Alle Stationen</option>
+                <option value="Nord" selected>Station Nord</option>
+                <option value="Süd">Station Süd</option>
+                <option value="Ost">Station Ost</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="status"><b>Status der Bestellung</b></label>
+            <select id="status" name="status">
+                <option value="">Alle</option>
+                <option value="offen" selected>○ Offen</option>
+                <option value="erledigt">✓ Erledigt</option>
+            </select>
+        </div>
+    </form>
+
+    <div class="button-bar">
+        <a class="secondary" href="#">← Hauptmenü</a>
+    </div>
+    
+    <br>
+    
+    <ul>
+        <div class="list-title">Liste der Bewohner</div>
+        
+        <li>
+            <div>
+                <span class="resident-name">Erika Mustermann</span>                    
+                <span class="status-pending">○ Offen</span>
+                <div class="resident-details">
+                    Station Nord | Zimmer 102
+                </div>
+            </div>
+            <a href="#">Bestellung erfassen →</a>
+        </li>
+
+        <li>
+            <div>
+                <span class="resident-name">Hans Schmidt</span>                    
+                <span class="status-finished">✓ Erledigt</span>
+                <div class="resident-details">
+                    Station Nord | Zimmer 105
+                </div>
+            </div>
+            <a href="#" class="change-button">Bestellung anpassen →</a>
+        </li>
+
+        <li>
+            <div>
+                <span class="resident-name">Karl-Heinz Müller</span>                    
+                <span class="status-pending">○ Offen</span>
+                <div class="resident-details">
+                    Station Nord | Zimmer 110
+                </div>
+            </div>
+            <a href="#">Bestellung erfassen →</a>
+        </li>
+    </ul>
+</div>
 </body>
 </html>
