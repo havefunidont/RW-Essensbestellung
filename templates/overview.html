@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Küche - Bestellungen vom {{ date_filter.split('-')[2] }}.{{ date_filter.split('-')[1] }}.{{ date_filter.split('-')[0] }}</title>
+    <title>Küchenübersicht - Bestellungen vom {{ date_filter.split('-')[2] }}.{{ date_filter.split('-')[1] }}.{{ date_filter.split('-')[0] }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         /* Druck-Anpassung */
@@ -73,7 +73,7 @@
         <div class="logo">
             <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo Ruhesitz Wetterstein" width="300">
         </div>
-        <h1>Küche - Bestellungen vom {{ date_filter.split('-')[2] }}.{{ date_filter.split('-')[1] }}.{{ date_filter.split('-')[0] }}</h1>
+        <h1>Küchenübersicht - Bestellungen vom {{ date_filter.split('-')[2] }}.{{ date_filter.split('-')[1] }}.{{ date_filter.split('-')[0] }}</h1>
 
 
     <form method="GET" action="/overview" class="filter-form" onchange="event.preventDefault(); this.closest('form').submit();">
