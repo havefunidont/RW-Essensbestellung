@@ -16,6 +16,16 @@
     <form method="GET" action="/entry" class="filter-form" onchange="this.submit()">
         <p>Wählen Sie die Station sowie den Bearbeitungsstatus aus, um die Bewohnerliste zu filtern.</p>
 
+        <div class="form-group" id="week-selection">
+            <label for="week_start"><b>Woche</b></label>
+            <select id="week_start" name="week_start" onchange="this.form.submit();">
+                {% for week in week_options %}
+                <option value="{{ week.value }}" {% if selected_week == week.value %}selected{% endif %}>
+                    {{ week.label }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
         <div class="form-group">
             <label for="station"><b>Station</b></label>
             <select id="station" name="station">
@@ -37,15 +47,10 @@
         </div>
     </form>
 
-        <!--<div class="form-group">
-            <label for="date">Datum auswählen</label>
-            <input type="date" id="date" name="date" value="{{ date_filter }}" onchange="this.form.submit()">
-        </div>-->
-
-    </form>
     <div class="button-bar">
-    <a class="secondary" href="/">← Zurück</a>
+        <a class="secondary" href="/">← Zurück</a>
     </div>
+
     <br>
     <ul>
         <div class="list-title">
@@ -66,14 +71,15 @@
                     | Zimmer {{ resident.room }}
                     </div>
                 </div>
-                {% if resident.done %}
-                        <a href="/order/{{ resident.id }}?date={{ date_filter }}&station={{ station_filter }}&status={{ status_filter }}" class="change-button" >
+                    {% if resident.done %}
+                        <a href="/order/{{ resident.id }}?week_start={{ selected_week }}&date={{ date_filter }}&station={{ station_filter }}&status={{ status_filter }}" class="change-button" >
                         Bestellung anpassen →
+                        </a>
                     {% else %}
-                        <a href="/order/{{ resident.id }}?date={{ date_filter }}&station={{ station_filter }}&status={{ status_filter }}">
+                        <a href="/order/{{ resident.id }}?week_start={{ selected_week }}&date={{ date_filter }}&station={{ station_filter }}&status={{ status_filter }}">
                         Bestellung erfassen →
+                        </a>
                     {% endif %}
-                </a>
             </li>
         {% endfor %}
     </ul>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Bedienungsanleitung - Digitale Essenswunscherfassung</title>
+    <style>
+        /* ==========================================================================
+           DESIGN & THEME (Ruhesitz Wetterstein - Stil)
+           ========================================================================== */
+        :root {
+            --wetterstein-blue: #005a9b;
+            --bg-creme: #f6f4ef;
+            --surface-white: #ffffff;
+            --text-dark: #1c1c1c;
+            --text-muted: #6c757d;
+            --border-color: #e6e0d6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+            color: var(--text-dark);
+            background-color: var(--surface-white);
+            line-height: 1.6;
+            font-size: 14px;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Kopfzeile mit Logo-Hintergrund */
+        .header-logo {
+            background-color: var(--wetterstein-blue);
+            padding: 25px;
+            display: flex;
+            justify-content: center;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .header-logo img {
+            max-width: 280px;
+            height: auto;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: var(--text-dark);
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .meta-info {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        /* Abschnitte - Erlaubt jetzt normale Umbrüche für Fließtext */
+        .section {
+            margin-bottom: 30px;
+        }
+
+        /* Verhindert, dass eine Überschrift ganz unten auf der Seite steht */
+        h2, h3 {
+            page-break-after: avoid;
+            break-after: avoid;
+            font-size: 16px;
+            color: var(--wetterstein-blue);
+            background-color: var(--bg-creme);
+            padding: 10px 14px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--wetterstein-blue);
+            font-weight: bold;
+        }
+
+        p {
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        /* Listen & Schritte */
+        ol, ul {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: var(--wetterstein-blue);
+        }
+
+        /* Status-Abhakkästchen wie in der App */
+        .badge {
+            font-size: 12px;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .badge-pending {
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+        .badge-finished {
+            background-color: #e8f5e9;
+            color: #28a745;
+        }
+
+        /* Wichtige Hinweise */
+        .alert-box {
+            background-color: var(--bg-creme);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 6px;
+            page-break-inside: avoid; /* Hält den Infokasten im Ganzen zusammen */
+            break-inside: avoid;
+        }
+
+        .alert-box h3 {
+            color: #c0392b;
+            font-size: 15px;
+            margin-bottom: 10px;
+            background-color: transparent;
+            padding: 0;
+            border: none;
+        }
+
+        .alert-box ul {
+            margin-bottom: 0;
+            margin-left: 20px;
+        }
+
+        /* Druck-Optimierung */
+        @media print {
+            body {
+                padding: 0;
+                font-size: 13px;
+                -webkit-print-color-adjust: exact; /* Erzwingt Hintergrundfarben in Chrome/Safari/Edge */
+                print-color-adjust: exact;         /* Erzwingt Hintergrundfarben in Firefox */
+            }
+            .container {
+                max-width: 100%;
+            }
+            @page {
+                size: A4;
+                margin: 1.5cm;
+            }
+        }
+    </style>
+</head>
+
+<div class="container">
+    <div class="header-logo">
+        <img src="static/images/logo.svg" alt="Logo Ruhesitz Wetterstein">
+    </div>
+
+    <h1>Schritt-für-Schritt-Anleitung<br>Digitale Essenswunscherfassung</h1>
+
+    <div class="meta-info">
+        <span><strong>Bereich:</strong> Betreutes Wohnen (Testlauf)</span>
+        <span><strong>Stand:</strong> Juni 2026</span>
+    </div>
+
+    <div class="section">
+        <p>Dieses Programm ersetzt die alten Zettel-Listen. Sie können die Wünsche der Bewohner damit ganz einfach auf dem Tablet eintragen. Die Küche erhält alle Zahlen und einzelne Details automatisch in Echtzeit.</p>
+    </div>
+
+    <div class="section">
+        <h2>1. Die Startseite</h2>
+        <p>Wenn Sie das Programm öffnen, sehen Sie drei große Kacheln. Wählen Sie einfach den Bereich, den Sie gerade brauchen:</p>
+        <ul>
+            <li><strong>Essenswunscherfassung:</strong> Hier können die Essenswünsche für die Bewohner eingetragen werden.</li>
+            <li><strong>Küche:</strong> Hier sieht man auf einen Blick für jeden Tag, welche Anzahl von welchem Menü benötigt wird und welcher Bewohner welchen Essenswunsch hat.</li>
+            <li><strong>Verwaltung:</strong> Hier können neue Bewohner hinzugefügt oder Bewohner aus dem System gelöscht werden.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>2. Die Essenswünsche für die Bewohner eintragen</h2>
+        <p>Gehen Sie wie folgt vor, um die Wünsche für die kommende Woche aufzunehmen, oder Essenswünsche anzupassen:</p>
+        <ol>
+            <li>Klicken Sie auf der Startseite bei der Kachel „Essenswunscherfassung“ auf <strong>„Bestellungen erfassen →“</strong>.</li>
+            <li>Nutzen Sie das Auswahlfeld <strong>„Station“</strong>, um sich nur die Bewohner Ihrer eigenen Station anzeigen zu lassen.</li>
+            <li>Der graue oder grüne Kasten neben dem Namen zeigt Ihnen den aktuellen Stand:
+                <br>
+                <span class="badge badge-pending">○ Bestellung offen</span> = Für diesen Bewohner wurde für die Woche noch nichts eingetragen.
+                <br>
+                <span class="badge badge-finished">✓ Bestellung erfasst</span> = Die Wünsche für diese Woche sind bereits vollständig erfasst.
+            </li>
+            <li>Klicken Sie beim jeweiligen Bewohner rechts auf den blauen Knopf <strong>„Bestellungen erfassen →“</strong> (bzw. „Bestellung anpassen →“).</li>
+            <li>Nun öffnet sich die Wochenübersicht von Montag bis Sonntag. Wählen Sie pro Tag einfach das gewünschte <strong>Mittagessen</strong> und <strong>Abendessen</strong> aus den Listen aus.</li>
+            <li><strong>Wichtig:</strong> Besondere Wünsche, Allergien oder Diäthinweise (z. B. <i>„Kein Zimt“</i> oder <i>„Laktosefrei“</i>) können Sie ganz einfach in das Textfeld <strong>„Hinweise“</strong> eintragen. Das Küchenteam sieht das später auf dem Küchenzettel.</li>
+            <li>Klicken Sie ganz unten auf den großen Knopf <strong>„Essenswunsch speichern“</strong>. Das System springt automatisch zurück zur Bewohnerliste. Hinweis: Standardmäßig werden wegen der Übersichtlichkeit Bewohner mit bereits erfasstem Essenswunsch ausgeblendet. Blenden Sie diese wieder ein, indem Sie oben nach dem Bestellstatus filtern.</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>3. Die Übersicht für die Küche</h2>
+        <p>Wenn Sie auf der Startseite auf <strong>„Küchenübersicht öffnen →“</strong> klicken, wählen Sie das gewünschte Datum aus und sehen Sie folgende Ansicht getrennt nach Mittag- und Abendessen:</p>
+        <ul>
+            <li><strong>Die Mengenübersicht (Ganz oben):</strong> Hier rechnet das System alle Bestellungen für den ausgewählten Tag zusammen. Die Küche sieht sofort die exakte Gesamtanzahl für <i>Menü 1, Menü 2, Suppe, Grießbrei</i> oder <i>passierte Kost</i>, um die Produktion zu planen.</li>
+            <li><strong>Die Bewohnerliste (Darunter):</strong> Hier ist jeder Bewohner einzeln mit seiner Zimmernummer aufgeführt. Die Küche sieht genau, wer welches Essen bekommt und ob wichtige Unverträglichkeiten im Hinweisfeld stehen.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>4. Bewohner verwalten</h2>
+        <p>Damit die Bewohnerlisten immer aktuell sind und zu Beginn des Testlaufs die Bewohner eingepflegt werden können, können Sie Änderungen über die Kachel <strong>„Verwaltung“</strong> selbst vornehmen:</p>
+        <ul>
+            <li><strong>Neuen Bewohner hinzufügen:</strong> Tragen Sie den Namen, die Zimmernummer und die Station ein. Klicken Sie auf <strong>„Hinzufügen ↩“</strong>. Der Bewohner erscheint ab sofort automatisch in der Erfassungsliste.</li>
+            <li><strong>Bewohner entfernen:</strong> Wenn ein Bewohner auszieht oder verstirbt, suchen Sie ihn in der Liste im unteren Bereich und klicken Sie rechts auf <strong>„Bewohner entfernen ↩“</strong>.</li>
+        </ul>
+    </div>
+
+    <div class="section alert-box">
+        <h3>⚠️ Wichtige Praxis-Hinweise für den Testlauf</h3>
+        <ul>
+            <li><strong>Ersterfassung der Bewohner:</strong> Die Bewohnerliste ist zu Beginn noch leer. <strong>Bitte tragen Sie die Bewohner über die Kachel Verwaltung ein</strong>.</li>
+            <li><strong>Abgabe-Frist für den Pflegedienst:</strong> Bitte tragen Sie die Wünsche für die Folgewoche nach Möglichkeit bis <strong>Donnerstagmittag</strong> ein, damit die Küche rechtzeitig für die neue Woche bestellen und kalkulieren kann.</li>
+            <li><strong>Gemeinsames Arbeiten auf Station:</strong> Um zu verhindern, dass Einträge aus Versehen überschrieben werden, sprechen Sie sich bitte kurz ab: <strong>Bitte öffnen und bearbeiten Sie den Erfassungsbogen eines Bewohners nicht zeitgleich auf zwei verschiedenen Geräten.</strong></li>
+            <li><strong>Änderungen im laufenden Betrieb:</strong> Wenn Sie Daten eingetragen, geändert oder einen Bewohner gelöscht haben, müssen Sie nichts weiter tun. Das System speichert alles sofort ab und aktualisiert die Ansichten auf allen Geräten im Haus von ganz alleine.</li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

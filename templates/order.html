@@ -49,12 +49,13 @@
     </p>
     <br>
     <div class="button-bar">
-        <a href="/entry?date={{ request.args.get('date') }}&station={{ request.args.get('station') }}&status={{ request.args.get('status') }}" class="secondary">
+        <a href="/entry?week_start={{ selected_week }}&station={{ request.args.get('station') }}&status={{ request.args.get('status') }}" class="secondary">
             ← Zurück
         </a>
     </div>
     <br><br>
     <form method="POST">
+        <input type="hidden" name="week_start" value="{{ selected_week }}">
         <input type="hidden" name="station" value="{{ request.args.get('station', '') }}">
         <input type="hidden" name="status" value="{{ request.args.get('status', '') }}">
 
