@@ -1,11 +1,1 @@
-[
-    {"id": 1, "name": "Frau Müller", "room": "101", "station": "Betreutes Wohnen"},
-    {"id": 2, "name": "Herr Schmidt", "room": "102", "station": "Betreutes Wohnen"},
-    {"id": 3, "name": "Frau Weber", "room": "103", "station": "Betreutes Wohnen"},
-    {"id": 4, "name": "Herr Becker", "room": "201", "station": "Betreutes Wohnen"},
-    {"id": 5, "name": "Frau Schneider", "room": "202", "station": "Betreutes Wohnen"},
-    {"id": 6, "name": "Herr Wagner", "room": "203", "station": "Betreutes Wohnen"},
-    {"id": 7, "name": "Frau Hoffmann", "room": "10", "station": "Betreutes Wohnen"},
-    {"id": 8, "name": "Herr Koch", "room": "12", "station": "Betreutes Wohnen"},
-    {"id": 9, "name": "Frau Richter", "room": "15", "station": "Betreutes Wohnen"}
-]
+[]

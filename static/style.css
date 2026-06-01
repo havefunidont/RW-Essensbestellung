@@ -111,7 +111,7 @@ h1 {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 250px;
-    gap: var(--gap-sm);
+    gap: 15px;
 
     background: var(--neutral-light-bg);
     border: 1px solid var(--border-color);
@@ -122,17 +122,27 @@ h1 {
     
     display: flex; /* Flex-Layout sorgt für saubere Ausrichtung der inneren Kachel-Elemente */
     flex-direction: column;
+    justify-content: space-between;
     transition: 0.2s ease;
 }
 
 .action-card h2 {
     font-size: 22px;
+    text-align: left;
 }
 
 .action-card p {
     font-size: 15px;
+    text-align: left;
+    color: var(--text-muted);
+    line-height: 1.5;
+    flex-grow: 1;
 }
 
+.action-card a {
+    margin-top: auto;
+    align-self: flex-start;
+}
 
 /* ==========================================================================
    LISTEN (Bewohner- & Stationsübersichten)
@@ -289,6 +299,12 @@ form {
     color: var(--text-muted);
     border: 1px solid var(--border-color);
     background-color: var(--neutral-light-bg);
+}
+
+.filter-form button {
+    flex:0.5;
+    align-self: flex-end;
+    height: 40px;
 }
 
 .form-group {

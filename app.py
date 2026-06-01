@@ -218,6 +218,58 @@ def entry():
         date_filter=date_filter
     )
 
+@app.route("/administration")
+def administration():
+    residents = load_residents()
+    return render_template("administration.html", residents=residents)
+
+# Bewohner speichern:
+def save_residents(residents):
+    with open("residents.json", "w", encoding="utf-8") as f:
+        json.dump(residents, f, indent=4, ensure_ascii=False)
+        
+# Bewohner hinzufügen - POST
+@app.route("/administration/add", methods=["POST"])
+def administration_add():
+    residents = load_residents()
+    
+    # Daten aus dem Formular auslesen
+    name = request.form.get("name", "").strip()
+    room = request.form.get("room", "").strip()
+    station = request.form.get("station", "").strip()
+    
+    if name and room and station:
+        # Höchste bestehende ID ermitteln und um 1 erhöhen
+        new_id = max([r["id"] for r in residents]) + 1 if residents else 1
+        
+        # Neuen Bewohner anhängen
+        residents.append({
+            "id": new_id,
+            "name": name,
+            "room": room,
+            "station": station
+        })
+        save_residents(residents)
+    
+    return redirect("/administration")
+
+# Bewohner entfernen - GET
+@app.route("/administration/delete/<int:resident_id>")
+def administration_delete(resident_id):
+    residents = load_residents()
+    
+    # Bewohner aus der Liste filtern
+    residents = [r for r in residents if r["id"] != resident_id]
+    save_residents(residents)
+    
+    # Optionale Bereinigung: Löscht auch die alten Bestellungen des Bewohners,
+    # damit die orders.json sauber bleibt
+    orders = load_orders()
+    orders = [o for o in orders if o["resident_id"] != resident_id]
+    save_orders(orders)
+    
+    return redirect("/administration")
+
 if __name__ == '__main__':
     from livereload import Server
     server = Server(app.wsgi_app)
