@@ -4,12 +4,12 @@ Ein modernes, einfach zu bedienendes System zur Verwaltung von Essenswünschen f
 
 ## Features
 
-- 📋 **Essenswunscherfassung**: Pfleger erfassen Lunch- und Dinner-Wünsche für jeden Bewohner (7-Tage-Wochenansicht)
-- 👨‍⚖️ **Küchenübersicht**: Küchenpersonal sieht sofort alle Bestellungen für einen bestimmten Tag (mit Statistiken)
-- 👤 **Bewohnerverwaltung**: Neue Bewohner hinzufügen/entfernen, Station zuweisen
-- 🏷️ **Status-Filter**: Offene/erledigte Bestellungen auf einen Blick
-- 🏢 **Station-Filter**: Nach Wohnbereich filtern
-- 💬 **Notizen**: Spezielle Ernährungswünsche vermerken (z.B. "passiert", "Allergie")
+- **Essenswunscherfassung**: Pfleger erfassen Lunch- und Dinner-Wünsche für jeden Bewohner (7-Tage-Wochenansicht)
+- **Küchenübersicht**: Küchenpersonal sieht sofort alle Bestellungen für einen bestimmten Tag (mit Statistiken)
+- **Bewohnerverwaltung**: Neue Bewohner hinzufügen/entfernen, Station zuweisen
+- **Status-Filter**: Offene/erledigte Bestellungen auf einen Blick
+- **Station-Filter**: Nach Wohnbereich filtern
+- **Notizen**: Spezielle Ernährungswünsche vermerken (z.B. "passiert", "Allergie")
 
 ## Installation
 
@@ -33,43 +33,6 @@ Die App lädt dann automatisch unter:
 ```
 http://127.0.0.1:5000
 ```
-
-Öffne diese Adresse im Browser.
-
-> **Tipp**: Die App wird überwacht – wenn du eine Datei änderst (HTML, CSS, Python), lädt der Browser automatisch neu (Live-Reload).
-
-## Bedienung
-
-### Startseite (`/`)
-Zentrale Anlaufstelle mit 3 Buttons:
-- 📝 **Bestellungen erfassen** → Zu Bewohnerliste
-- 🍽️ **Küchenübersicht** → Tagesplanung
-- ⚙️ **Bewohner verwalten** → Admin-Bereich
-
-### Essenswunscherfassung (`/entry`)
-1. **Station/Status-Filter** setzen (optional)
-2. **Woche wählen** (Aktuelle/Kommende/Übernächste)
-3. Auf einen **Bewohner klicken**
-4. Für jeden der 7 Tage Mittag + Abendessen wählen
-5. **Speichern** – Status wechselt zu ✅ Erledigt
-
-### Küchenübersicht (`/overview`)
-- Zeigt alle Bestellungen für einen bestimmten Tag
-- **Statistik unten**: Wie viele × Menü 1, Menü 2, Suppe, etc.
-- Nach Name filtern (Suche)
-
-### Bewohnerverwaltung (`/administration`)
-- Neue Bewohner: Name, Zimmer, Station eingeben → **Hinzufügen**
-- Bewohner löschen: ❌ Button klicken
-
-## Datenstruktur
-
-Die App speichert alles lokal:
-- `residents.json` – Liste aller Bewohner (ID, Name, Zimmer, Station)
-- `orders.json` – Alle Bestellungen (Bewohner-ID, Datum, Mittag, Abend, Notizen)
-
-> Beide Dateien sind reguläre JSON und können notfalls mit einem Text-Editor bearbeitet werden.
-
 ## Technische Details
 
 | Eigenschaft | Details |
@@ -96,7 +59,7 @@ Die App speichert alles lokal:
 
 ## Support
 
-Bei Fragen: Entwickler kontaktieren 📧
+Bei Fragen: Entwickler kontaktieren 
 
 ---
 
