@@ -89,18 +89,6 @@
                             Menü 2
                         </label><br>
                         <label>
-                            <input type="radio" name="lunch_{{ day.index }}" value="Suppe" {% if day.saved_lunch == 'Suppe' %}checked{% endif %}>
-                            Suppe
-                        </label><br>
-                        <label>
-                            <input type="radio" name="lunch_{{ day.index }}" value="Grießbrei" {% if day.saved_lunch == 'Grießbrei' %}checked{% endif %}>
-                            Grießbrei
-                        </label><br>
-                        <label>
-                            <input type="radio" name="lunch_{{ day.index }}" value="passiert" {% if day.saved_lunch == 'passiert' %}checked{% endif %}>
-                            passiert
-                        </label><br>
-                        <label>
                             <input type="radio" name="lunch_{{ day.index }}" value="Kein Essen" {% if day.saved_lunch == 'Kein Essen' %}checked{% endif %}>
                             Kein Essen
                         </label>
@@ -116,24 +104,28 @@
                             Menü 2
                         </label><br>
                         <label>
-                            <input type="radio" name="dinner_{{ day.index }}" value="Suppe" {% if day.saved_dinner == 'Suppe' %}checked{% endif %}>
-                            Suppe
-                        </label><br>
-                        <label>
-                            <input type="radio" name="dinner_{{ day.index }}" value="Grießbrei" {% if day.saved_dinner == 'Grießbrei' %}checked{% endif %}>
-                            Grießbrei
-                        </label><br>
-                        <label>
-                            <input type="radio" name="dinner_{{ day.index }}" value="passiert" {% if day.saved_dinner == 'passiert' %}checked{% endif %}>
-                            passiert
-                        </label><br>
-                        <label>
                             <input type="radio" name="dinner_{{ day.index }}" value="Kein Essen" {% if day.saved_dinner == 'Kein Essen' %}checked{% endif %}>
                             Kein Essen
                         </label>
                     </td>
 
                     <td>
+                        <label>
+                            <input type="checkbox"
+                                name="half_portion_{{ day.index }}"
+                                value="Ja"
+                                {% if day.saved_half_portion %}checked{% endif %}>
+                            Halbe Portion
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox"
+                                name="no_soup_{{ day.index }}"
+                                value="Ja"
+                                {% if day.saved_no_soup %}checked{% endif %}>
+                            Ohne Suppe
+                        </label>
+                        <br>
                         <textarea
                             id="notes_{{ day.index }}"
                             name="notes_{{ day.index }}"
@@ -142,7 +134,6 @@
                             placeholder="z.B. keine Nüsse, laktosefrei..."
                         >{{ day.saved_notes }}</textarea>
                     </td>
-
                 </tr>
             {% endfor %}
             </tbody>
@@ -154,7 +145,6 @@
             </button>
         </div>
     </form>
-
     <br>
 </div>
 </body>

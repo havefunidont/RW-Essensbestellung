@@ -111,7 +111,23 @@
                     {{ order.lunch or "-/-" }}
                 </td>
 
-                <td>{{ order.notes or "-/-" }}</td>
+                <td>
+                    {% if order.half_portion %}
+                        Halbe Portion<br>
+                    {% endif %}
+                    
+                    {% if order.no_soup %}
+                        Ohne Suppe<br>
+                    {% endif %}
+
+                    {% if order.notes %}
+                        {{ order.notes }}
+                    {% endif %}
+
+                    {% if not order.half_portion and not order.no_soup and not order.notes%}
+                        -/- 
+                    {% endif %}
+                </td>
 
                 <!--<td>{{ order.timestamp }}</td>-->
             </tr>
@@ -136,7 +152,7 @@
         {% endfor %}
         </table>
     </div>
-    <br><br>
+    <br>
     <div class="dinner-section">
         <h2>Abendessen</h2>
         <table>
@@ -157,7 +173,23 @@
                     {{ order.dinner or "-/-" }}
                 </td>
 
-                <td>{{ order.notes or "-/-" }}</td>
+                <td>
+                    {% if order.half_portion %}
+                        Halbe Portion<br>
+                    {% endif %}
+                    
+                    {% if order.no_soup %}
+                        Ohne Suppe<br>
+                    {% endif %}
+
+                    {% if order.notes %}
+                        {{ order.notes }}
+                    {% endif %}
+
+                    {% if not order.half_portion and not order.no_soup and not order.notes%}
+                        -/- 
+                    {% endif %}
+                </td>
 
                 <!--<td>{{ order.timestamp }}</td>-->
             </tr>

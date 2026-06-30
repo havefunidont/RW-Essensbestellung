@@ -58,7 +58,11 @@ def order(resident_id):
             lunch = request.form.get(f"lunch_{i}")
             dinner = request.form.get(f"dinner_{i}")
             note = request.form.get(f"notes_{i}", "").strip()
-
+            
+            # Halbe Portion und ohne Suppe:
+            half_portion = f"half_portion_{i}" in request.form
+            no_soup = f"no_soup_{i}" in request.form
+            
             if date_str:
                 # Duplikate für diesen Tag und Bewohner entfernen
                 orders = [o for o in orders if not (o["resident_id"] == resident_id and o["timestamp"] == date_str)]
@@ -71,6 +75,8 @@ def order(resident_id):
                     "lunch": lunch,
                     "dinner": dinner,
                     "notes": note,
+                    "half_portion": half_portion,
+                    "no_soup": no_soup,
                     "timestamp": date_str
                 })
 
@@ -96,9 +102,11 @@ def order(resident_id):
             "date_str": date_str,
             "date_de": current_date.strftime("%d.%m.%Y"),
             "day_name": wochentage[i],
-            "saved_lunch": existing_order["lunch"] if existing_order else "Menü 1",
-            "saved_dinner": existing_order["dinner"] if existing_order else "Menü 1",
-            "saved_notes": existing_order["notes"] if existing_order else ""
+            "saved_lunch": existing_order["lunch"] if existing_order else "",
+            "saved_dinner": existing_order["dinner"] if existing_order else "",
+            "saved_notes": existing_order["notes"] if existing_order else "",
+            "saved_half_portion": existing_order.get("half_portion", False) if existing_order else False,
+            "saved_no_soup": existing_order.get("no_soup", False) if existing_order else False
         })
 
     return render_template("order.html", resident=resident, days=days, selected_week=selected_week)
@@ -122,8 +130,8 @@ def overview():
     filtered_orders = []
     
     # Statistiken initialisieren
-    lunch_stats = {"Menü 1": 0, "Menü 2": 0, "Suppe": 0, "Grießbrei": 0, "passiert": 0, "Kein Essen": 0}
-    dinner_stats = {"Menü 1": 0, "Menü 2": 0, "Suppe": 0, "Grießbrei": 0, "passiert": 0, "Kein Essen": 0}
+    lunch_stats = {"Menü 1": 0, "Menü 2": 0, "Kein Essen": 0}
+    dinner_stats = {"Menü 1": 0, "Menü 2": 0, "Kein Essen": 0}
 
     for order in orders:
         if date_filter and order.get("timestamp", "") != date_filter:
@@ -174,6 +182,12 @@ def get_week_options():
 def entry():
     residents = load_residents()
     orders = load_orders()
+    
+    # Sortiere die Bewohner nach Stockwerk:
+    residents = sorted(
+    residents,
+    key=lambda x: (int(str(x["room"])[0]), int(x["room"]))
+    )
 
     # Filter aus der URL holen
     station_filter = request.args.get("station", "")
@@ -236,6 +250,13 @@ def entry():
 @app.route("/administration")
 def administration():
     residents = load_residents()
+    
+    # Sortiere die Bewohner nach Stockwerk:
+    residents = sorted(
+    residents,
+    key=lambda x: (int(str(x["room"])[0]), int(x["room"]))
+    )
+
     return render_template("administration.html", residents=residents)
 
 # Bewohner speichern:
@@ -289,7 +310,6 @@ if __name__ == '__main__':
     from livereload import Server
     server = Server(app.wsgi_app)
     
-    # Durch den Punkt ('.') überwacht das Tool ab sofort das KOMPLETTE Projektverzeichnis
     server.watch('.')
     
     server.serve(port=5000, liveport=35729, host='127.0.0.1')
