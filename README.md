@@ -11,6 +11,9 @@ Ein modernes, einfach zu bedienendes System zur Verwaltung von Essenswünschen f
 - **Station-Filter**: Nach Wohnbereich filtern
 - **Notizen**: Spezielle Ernährungswünsche vermerken
 
+## Datenbank Schema
+<img width="742" height="272" alt="DB Schema" src="https://github.com/user-attachments/assets/9a6028e0-1381-4d5a-9add-0513cb660e7f" />
+
 ## Installation
 
 ### Voraussetzungen
