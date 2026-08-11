@@ -12,7 +12,7 @@ Ein modernes, einfach zu bedienendes System zur Verwaltung von Essenswünschen f
 - **Notizen**: Spezielle Ernährungswünsche vermerken
 
 ## Datenbank Schema
-<img width="742" height="272" alt="DB Schema" src="https://github.com/user-attachments/assets/9a6028e0-1381-4d5a-9add-0513cb660e7f" />
+<img width="742" height="272" alt="DB Schema" src="https://github.com/user-attachments/assets/4cb7976f-1115-43bb-8cd5-d88846308970" />
 
 ## Installation
 
