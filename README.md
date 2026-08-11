@@ -4,12 +4,12 @@ Ein modernes, einfach zu bedienendes System zur Verwaltung von Essenswünschen f
 
 ## Features
 
-- **Essenswunscherfassung**: Pfleger erfassen Lunch- und Dinner-Wünsche für jeden Bewohner (7-Tage-Wochenansicht)
-- **Küchenübersicht**: Küchenpersonal sieht sofort alle Bestellungen für einen bestimmten Tag (mit Statistiken)
-- **Bewohnerverwaltung**: Neue Bewohner hinzufügen/entfernen, Station zuweisen
-- **Status-Filter**: Offene/erledigte Bestellungen auf einen Blick
+- **Essenswunscherfassung**: Pfleger erfassen Mittagessens- und Abendessenswünsche für jeden Bewohner 
+- **Küchenübersicht**: Küchenpersonal sieht sofort alle Bestellungen für einen bestimmten Tag 
+- **Bewohnerverwaltung**: Neue Bewohner hinzufügen und entfernen, Station zuweisen
+- **Status-Filter**: Offene und erledigte Bestellungen auf einen Blick
 - **Station-Filter**: Nach Wohnbereich filtern
-- **Notizen**: Spezielle Ernährungswünsche vermerken (z.B. "passiert", "Allergie")
+- **Notizen**: Spezielle Ernährungswünsche vermerken
 
 ## Installation
 
@@ -38,8 +38,8 @@ http://127.0.0.1:5000
 | Eigenschaft | Details |
 |---|---|
 | **Framework** | Flask (Python Web Framework) |
-| **Datenbank** | JSON Files (lokal) |
-| **Frontend** | HTML/CSS (Vanilla, keine JS-Frameworks) |
+| **Datenbank** | SQLite3 (lokal) |
+| **Frontend** | HTML/CSS |
 | **Live-Reload** | livereload (Auto-Refresh bei Änderungen) |
 | **Port** | 5000 |
 | **Einsatz** | Seniorenheim (Intranet, lokal) |
@@ -54,9 +54,6 @@ http://127.0.0.1:5000
 1. Andere App beenden die Port 5000 nutzt
 2. Oder in `app.py` letzte Zeile `port=5000` ändern zu z.B. `port=5001`
 
-### Änderungen erscheinen nicht
-→ Normalerweise auto-reload. Falls nicht: Browser mit `Ctrl+Shift+R` hard-refreshen
-
 ## Support
 
 Bei Fragen: Entwickler kontaktieren 
@@ -64,5 +61,5 @@ Bei Fragen: Entwickler kontaktieren
 ---
 
 **Entwickelt für**: Ruhesitz Wetterstein  
-**Version**: 1.1.0  
+**Version**: 1.2.0  
 **Stand**: Juni 2026

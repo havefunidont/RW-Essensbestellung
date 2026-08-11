@@ -1,1 +1,8 @@
-[]
+[
+    {
+        "id": 1,
+        "name": "Max Mustermann",
+        "room": "201",
+        "station": "Betreutes Wohnen"
+    }
+]
