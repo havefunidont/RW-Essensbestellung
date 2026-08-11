@@ -65,4 +65,4 @@ Bei Fragen: Entwickler kontaktieren
 
 **Entwickelt für**: Ruhesitz Wetterstein  
 **Version**: 1.2.0  
-**Stand**: Juni 2026
+**Stand**: August 2026
