@@ -37,10 +37,10 @@ http://127.0.0.1:5000
 
 | Eigenschaft | Details |
 |---|---|
-| **Framework** | Flask (Python Web Framework) |
+| **Framework** | Flask |
 | **Datenbank** | SQLite3 (lokal) |
 | **Frontend** | HTML/CSS |
-| **Live-Reload** | livereload (Auto-Refresh bei Änderungen) |
+| **Live-Reload** | livereload |
 | **Port** | 5000 |
 | **Einsatz** | Seniorenheim (Intranet, lokal) |
 
