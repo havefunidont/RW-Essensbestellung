@@ -5,7 +5,7 @@ Ein modernes, einfach zu bedienendes System zur Verwaltung von Essenswünschen f
 ## Features
 
 - **Essenswunscherfassung**: Pfleger erfassen Mittagessens- und Abendessenswünsche für jeden Bewohner 
-- **Küchenübersicht**: Küchenpersonal sieht sofort alle Bestellungen für einen bestimmten Tag 
+- **Küchenübersicht**: Küchenpersonal sieht sofort alle Bestellungen für einen bestimmten Tag und kann sie ausdrucken
 - **Bewohnerverwaltung**: Neue Bewohner hinzufügen und entfernen, Station zuweisen
 - **Status-Filter**: Offene und erledigte Bestellungen auf einen Blick
 - **Station-Filter**: Nach Wohnbereich filtern
