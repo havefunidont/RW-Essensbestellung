@@ -62,9 +62,6 @@ def index():
 # Bestellungen
 @app.route("/order/<int:resident_id>", methods=["GET", "POST"])
 def order(resident_id):
-    # residents = load_residents()
-    # resident = next((r for r in residents if r["id"] == resident_id), None)
-
     # Suche den Bewohner 
     verbindung = sqlite3.connect(DB_FILE)
     verbindung.row_factory = sqlite3.Row
@@ -83,10 +80,6 @@ def order(resident_id):
         return "Bewohner nicht gefunden", 404
 
     wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
-    
-    # Hole die Bestellungen
-    # orders = load_orders()
-
     
     # Die gewählte Woche aus der URL oder dem Formular holen
     selected_week = request.args.get("week_start") or request.form.get("week_start")
@@ -126,21 +119,7 @@ def order(resident_id):
                                VALUES (?, ?, ?, ?, ?, ?, ?)
                                """, (date_str, lunch, dinner, half_portion, no_soup, note, resident_id))
 
-                #orders.append({
-                #    "resident_id": resident_id,
-                #    "resident_name": resident["name"],
-                #    "room": resident["room"],
-                #    "station": resident["station"],
-                #    "lunch": lunch,
-                #    "dinner": dinner,
-                #    "notes": note,
-                #    "half_portion": half_portion,
-                #    "no_soup": no_soup,
-                #    "timestamp": date_str
-                #})
-
-        # Am ende speichern:
-        # save_orders(orders)
+        # Am Ende speichern:
         verbindung.commit()
         verbindung.close()
 
@@ -188,9 +167,6 @@ def order(resident_id):
 # Küchenübersicht
 @app.route("/overview")
 def overview():
-    # orders = load_orders()
-    # residents = load_residents()
-   
     # Datums- und Namensfilter laden 
     date_filter = request.args.get("date")
     
@@ -232,20 +208,11 @@ def overview():
     
     verbindung.close()
     
-    # filtered_orders = []
-    
     # Statistiken initialisieren
     lunch_stats = {"Menü 1": 0, "Menü 2": 0, "Kein Essen": 0}
     dinner_stats = {"Menü 1": 0, "Menü 2": 0, "Kein Essen": 0}
 
     for order in filtered_orders_with_residents:
-        #if date_filter and order.get("timestamp", "") != date_filter:
-        #    continue
-        #if name_filter and name_filter not in order.get("resident_name", "").lower():
-        #    continue
-            
-        # filtered_orders.append(order)
-        
         # Gerichte hochzählen, falls sie in den Statistiken existieren
         l_meal = order["lunch"]
         if l_meal in lunch_stats:
@@ -370,13 +337,6 @@ def administration():
         residents = zeiger.fetchall()
 
     return render_template("administration.html", residents=residents)
-    #residents = load_residents()
-    
-    # Sortiere die Bewohner nach Stockwerk:
-    #residents = sorted(
-    #residents,
-    #key=lambda x: (int(str(x["room"])[0]), int(x["room"]))
-    #)
     
 # Bewohner hinzufügen - POST
 @app.route("/administration/add", methods=["POST"])
@@ -398,20 +358,6 @@ def administration_add():
                        """, (name, room, 1)) # Im Testlauf gibts nur eine Station
    
     return redirect("/administration")
-    
-    # residents = load_residents()
-    #if name and room and station:
-        # Höchste bestehende ID ermitteln und um 1 erhöhen
-        #new_id = max([r["id"] for r in residents]) + 1 if residents else 1
-        
-        # Neuen Bewohner anhängen
-        #residents.append({
-        #    "id": new_id,
-        #    "name": name,
-        #    "room": room,
-        #    "station": station
-        #})
-        #save_residents(residents)
 
 # Bewohner entfernen - GET
 @app.route("/administration/delete/<int:resident_id>")
@@ -432,19 +378,6 @@ def administration_delete(resident_id):
                     """, (resident_id,))
         
     return redirect("/administration")
-        
-    # Bewohner laden und filtern:
-    #residents = load_residents()
-    
-    # Bewohner aus der Liste filtern
-    # residents = [r for r in residents if r["id"] != resident_id]
-    # save_residents(residents)
-    
-    # Optionale Bereinigung: Löscht auch die alten Bestellungen des Bewohners,
-    # damit die orders.json sauber bleibt
-    # orders = load_orders()
-    # orders = [o for o in orders if o["resident_id"] != resident_id]
-    # save_orders(orders)
     
 if __name__ == '__main__':
     init_db()
