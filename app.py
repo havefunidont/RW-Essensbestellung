@@ -109,9 +109,6 @@ def order(resident_id):
             no_soup = f"no_soup_{i}" in request.form
             
             if date_str:
-                # Duplikate für diesen Tag und Bewohner entfernen
-                #orders = [o for o in orders if not (o["resident_id"] == resident_id and o["timestamp"] == date_str)]
-
                 # Neue Bestellung einfügen
                 zeiger.execute("""
                                INSERT OR REPLACE 
@@ -187,7 +184,9 @@ def overview():
     # Lade die Bestellungen (mit oder ohne Namens Filter)
     if not name_filter:
         zeiger.execute("""
-                    SELECT Residents.name, Residents.room, Orders.* 
+                    SELECT Residents.name AS residentName, 
+                    Residents.room AS residentRoom
+                    , Orders.* 
                     FROM Residents
                     INNER JOIN Orders
                     ON Orders.residentID = Residents.residentID
@@ -197,8 +196,9 @@ def overview():
         filtered_orders_with_residents = zeiger.fetchall()
     else:
         zeiger.execute("""
-                    SELECT Residents.name, Residents.room, Orders.* 
-                    FROM Residents
+                    SELECT Residents.name AS residentName, 
+                    Residents.room AS residentRoom
+                    , Orders.* 
                     INNER JOIN Orders
                     ON Orders.residentID = Residents.residentID
                     WHERE Orders.date = ? AND Residents.name LIKE ?

@@ -104,19 +104,19 @@
 
             {% for order in orders %}
             <tr>
-                <td>{{ order.room }}</td>
-                <td>{{ order.resident_name }}</td>
+                <td>{{ order.residentRoom }}</td>
+                <td>{{ order.residentName }}</td>
 
                 <td class="meal">
                     {{ order.lunch or "-/-" }}
                 </td>
 
                 <td>
-                    {% if order.half_portion %}
+                    {% if order.halfPortion %}
                         Halbe Portion<br>
                     {% endif %}
                     
-                    {% if order.no_soup %}
+                    {% if order.noSoup %}
                         Ohne Suppe<br>
                     {% endif %}
 
@@ -124,7 +124,7 @@
                         {{ order.notes }}
                     {% endif %}
 
-                    {% if not order.half_portion and not order.no_soup and not order.notes%}
+                    {% if not order.halfPortion and not order.noSoup and not order.notes%}
                         -/- 
                     {% endif %}
                 </td>
@@ -166,19 +166,19 @@
 
             {% for order in orders %}
             <tr>
-                <td>{{ order.room }}</td>
-                <td>{{ order.resident_name }}</td>
+                <td>{{ order.residentRoom }}</td>
+                <td>{{ order.residentName }}</td>
 
                 <td class="meal">
                     {{ order.dinner or "-/-" }}
                 </td>
 
                 <td>
-                    {% if order.half_portion %}
+                    {% if order.halfPortion %}
                         Halbe Portion<br>
                     {% endif %}
                     
-                    {% if order.no_soup %}
+                    {% if order.noSoup %}
                         Ohne Suppe<br>
                     {% endif %}
 
@@ -186,7 +186,7 @@
                         {{ order.notes }}
                     {% endif %}
 
-                    {% if not order.half_portion and not order.no_soup and not order.notes%}
+                    {% if not order.halfPortion and not order.noSoup and not order.notes%}
                         -/- 
                     {% endif %}
                 </td>
