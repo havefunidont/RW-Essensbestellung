@@ -319,7 +319,8 @@ def entry():
         station_filter=station_filter,
         status_filter=status_filter,
         week_options=week_options,
-        selected_week=selected_week
+        selected_week=selected_week,
+        date_filter=start_date.isoformat()
     )
 
 @app.route("/administration")

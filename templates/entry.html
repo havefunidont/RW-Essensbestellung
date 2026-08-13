@@ -72,11 +72,11 @@
                     </div>
                 </div>
                     {% if resident.done %}
-                        <a href="/order/{{ resident.id }}?week_start={{ selected_week }}&date={{ date_filter }}&station={{ station_filter }}&status={{ status_filter }}" class="change-button" >
+                        <a href="/order/{{ resident.residentID }}?week_start={{ selected_week }}&date={{ date_filter }}&station={{ station_filter }}&status={{ status_filter }}" class="change-button" >
                         Bestellung anpassen →
                         </a>
                     {% else %}
-                        <a href="/order/{{ resident.id }}?week_start={{ selected_week }}&date={{ date_filter }}&station={{ station_filter }}&status={{ status_filter }}">
+                        <a href="/order/{{ resident.residentID }}?week_start={{ selected_week }}&date={{ date_filter }}&station={{ station_filter }}&status={{ status_filter }}">
                         Bestellung erfassen →
                         </a>
                     {% endif %}
