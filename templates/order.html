@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Bestellung eintragen {{ resident.name }} (Zimmer {{ resident.room }})</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .day-section {
+            background: #f0f4ff;
+            border: 1px solid #dbeafe;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .day-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f4ed8;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        td {
+            vertical-align: top;
+            padding: 12px;
+        }
+
+        strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-section">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo Ruhesitz Wetterstein" width="300">
+    </div>
+    <h1>Bestellung eintragen</h1>
+    <p>
+        Tragen Sie für die gewählte Woche die Essenswünsche von {{ resident.name }} (Zimmer {{ resident.room }}) ein.
+    </p>
+    <br>
+    <div class="button-bar">
+        <a href="/entry?week_start={{ selected_week }}&station={{ request.args.get('station') }}&status={{ request.args.get('status') }}" class="secondary">
+            ← Zurück
+        </a>
+    </div>
+    <br><br>
+    <form method="POST">
+        <input type="hidden" name="week_start" value="{{ selected_week }}">
+        <input type="hidden" name="station" value="{{ request.args.get('station', '') }}">
+        <input type="hidden" name="status" value="{{ request.args.get('status', '') }}">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th>Mittagessen</th>
+                    <th>Abendessen</th>
+                    <th>Hinweise</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for day in days %}
+                <tr>
+
+                    <td>
+                        <strong>{{ day.day_name }}</strong>
+                        <small>{{ day.date_de }}</small>
+                        <input type="hidden" name="date_{{ day.index }}" value="{{ day.date_str }}">
+                    </td>
+
+                    <td>
+                        <label>
+                            <input type="radio" name="lunch_{{ day.index }}" value="Menü 1" {% if day.saved_lunch == 'Menü 1' %}checked{% endif %} required>
+                            Menü 1
+                        </label><br>
+                        <label>
+                            <input type="radio" name="lunch_{{ day.index }}" value="Menü 2" {% if day.saved_lunch == 'Menü 2' %}checked{% endif %}>
+                            Menü 2
+                        </label><br>
+                        <label>
+                            <input type="radio" name="lunch_{{ day.index }}" value="Kein Essen" {% if day.saved_lunch == 'Kein Essen' %}checked{% endif %}>
+                            Kein Essen
+                        </label>
+                    </td>
+
+                    <td>
+                        <label>
+                            <input type="radio" name="dinner_{{ day.index }}" value="Menü 1" {% if day.saved_dinner == 'Menü 1' %}checked{% endif %} required>
+                            Menü 1
+                        </label><br>
+                        <label>
+                            <input type="radio" name="dinner_{{ day.index }}" value="Menü 2" {% if day.saved_dinner == 'Menü 2' %}checked{% endif %}>
+                            Menü 2
+                        </label><br>
+                        <label>
+                            <input type="radio" name="dinner_{{ day.index }}" value="Kein Essen" {% if day.saved_dinner == 'Kein Essen' %}checked{% endif %}>
+                            Kein Essen
+                        </label>
+                    </td>
+
+                    <td>
+                        <label>
+                            <input type="checkbox"
+                                name="half_portion_{{ day.index }}"
+                                value="Ja"
+                                {% if day.saved_half_portion %}checked{% endif %}>
+                            Halbe Portion
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox"
+                                name="no_soup_{{ day.index }}"
+                                value="Ja"
+                                {% if day.saved_no_soup %}checked{% endif %}>
+                            Ohne Suppe
+                        </label>
+                        <br>
+                        <textarea
+                            id="notes_{{ day.index }}"
+                            name="notes_{{ day.index }}"
+                            rows="4"
+                            cols="20"
+                            placeholder="z.B. keine Nüsse, laktosefrei..."
+                        >{{ day.saved_notes }}</textarea>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="button-bar">
+            <button type="submit">
+            Essenswunsch speichern ↩
+            </button>
+        </div>
+    </form>
+    <br>
+</div>
+</body>
+</html>

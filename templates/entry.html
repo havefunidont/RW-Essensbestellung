@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Essenserfassung - Bestellungen erfassen</title>
+    <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="main-section">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo Ruhesitz Wetterstein" width="300">
+    </div>
+    <h1>Essenserfassung - Bestellungen erfassen</h1>
+    <form method="GET" action="/entry" class="filter-form" onchange="this.submit()">
+        <p>Wählen Sie die Station sowie den Bearbeitungsstatus aus, um die Bewohnerliste zu filtern.</p>
+
+        <div class="form-group" id="week-selection">
+            <label for="week_start"><b>Woche</b></label>
+            <select id="week_start" name="week_start" onchange="this.form.submit();">
+                {% for week in week_options %}
+                <option value="{{ week.value }}" {% if selected_week == week.value %}selected{% endif %}>
+                    {{ week.label }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="station"><b>Station</b></label>
+            <select id="station" name="station">
+                <option value="">Alle</option>
+                {% for station in station_options %}
+                <!--Anzeige: Name, Wert: stationID-->
+                <option value="{{ station.stationID }}" {% if station_filter == station.stationID %}selected{% endif %}>
+                    {{ station.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="status"><b>Status</b></label>
+            <select id="status" name="status">
+                <option value="" {% if status_filter == "" %}selected{% endif %}>Alle</option>
+                <option value="offen" {% if status_filter == "offen" %}selected{% endif %}>Bestellung offen</option>
+                <option value="erledigt" {% if status_filter == "erledigt" %}selected{% endif %}>Bestellung erfasst</option>
+            </select>
+        </div>
+    </form>
+
+    <div class="button-bar">
+        <a class="secondary" href="/">← Zurück</a>
+    </div>
+
+    <br>
+    <ul>
+        <div class="list-title">
+            Liste der Bewohner
+        </div>
+        {% for resident in residents %}
+            <li>
+                <div class="resident-information">
+                    <span class="resident-name"> {{ resident.name }} </span>                     
+                    {% if resident.done %}
+                        <span class="status-finished">✓ Bestellung erfasst</span>
+                    {% else %}
+                        <span class="status-pending">○ Bestellung offen</span>
+                    {% endif %}
+                    <div class="resident-details">
+                    {{ resident.station }}
+                    
+                    | Zimmer {{ resident.room }}
+                    </div>
+                </div>
+                    {% if resident.done %}
+                        <a href="/order/{{ resident.residentID }}?week_start={{ selected_week }}&date={{ date_filter }}&station={{ station_filter }}&status={{ status_filter }}" class="change-button" >
+                        Bestellung anpassen →
+                        </a>
+                    {% else %}
+                        <a href="/order/{{ resident.residentID }}?week_start={{ selected_week }}&date={{ date_filter }}&station={{ station_filter }}&status={{ status_filter }}">
+                        Bestellung erfassen →
+                        </a>
+                    {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+</body>
+</html>
