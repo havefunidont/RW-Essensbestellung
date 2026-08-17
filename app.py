@@ -5,7 +5,7 @@ import sqlite3
 # RELEASE
 
 app = Flask(__name__)
-# app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 DB_FILE = "datenbank.db"
 
@@ -404,8 +404,8 @@ def administration_delete(resident_id):
     
 if __name__ == '__main__':
     init_db()
-    app.run(host='0.0.0.0', port=5000, debug=False)
-    # from livereload import Server
-    # server = Server(app.wsgi_app)
-    # server.watch('.')
-    # server.serve(port=5000, liveport=35729, host='127.0.0.1')
+    # app.run(host='0.0.0.0', port=5000, debug=False)
+    from livereload import Server
+    server = Server(app.wsgi_app)
+    server.watch('.')
+    server.serve(port=5000, liveport=35729, host='0.0.0.0')
