@@ -9,9 +9,17 @@ app = Flask(__name__)
 
 DB_FILE = "datenbank.db"
 
+def get_connection():
+    verbindung = sqlite3.connect(DB_FILE, timeout=5.0)
+    verbindung.row_factory = sqlite3.Row
+    verbindung.execute("PRAGMA foreign_keys = ON;")
+    verbindung.execute("PRAGMA busy_timeout = 5000;")
+    verbindung.execute("PRAGMA journal_mode = WAL;")
+    return verbindung
+
 # Initialisiere die Datenbank
 def init_db():
-    verbindung = sqlite3.connect(DB_FILE)
+    verbindung = get_connection()
     zeiger = verbindung.cursor()
     
     # Erstelle die DB-Tabellen beim ersten Start
@@ -66,8 +74,7 @@ def index():
 @app.route("/order/<int:resident_id>", methods=["GET", "POST"])
 def order(resident_id):
     # Suche den Bewohner 
-    verbindung = sqlite3.connect(DB_FILE)
-    verbindung.row_factory = sqlite3.Row
+    verbindung = get_connection()
     
     zeiger = verbindung.cursor()
     zeiger.execute("""
@@ -98,7 +105,7 @@ def order(resident_id):
         station = request.form.get("station", "")
         status = request.form.get("status", "")
         
-        verbindung = sqlite3.connect(DB_FILE)
+        verbindung = get_connection()
         zeiger = verbindung.cursor()
         
         # Alle 7 Wochentage durchlaufen und speichern
@@ -130,8 +137,7 @@ def order(resident_id):
     # --- GET-MODUS: Generierung der gewählten Woche ---
     start_of_week = datetime.fromisoformat(selected_week).date()
     
-    verbindung = sqlite3.connect(DB_FILE)
-    verbindung.row_factory = sqlite3.Row 
+    verbindung = get_connection()
     zeiger = verbindung.cursor()
 
     days = []
@@ -180,8 +186,7 @@ def overview():
         
     name_filter = request.args.get("name", "").strip()
         
-    verbindung = sqlite3.connect(DB_FILE)
-    verbindung.row_factory = sqlite3.Row
+    verbindung = get_connection()
     zeiger = verbindung.cursor()
     
     # Lade die Bestellungen (mit oder ohne Namens Filter)
@@ -270,8 +275,7 @@ def entry():
     start_date = datetime.fromisoformat(selected_week).date()
     end_date = start_date + timedelta(days=6)
 
-    with sqlite3.connect(DB_FILE) as verbindung:
-        verbindung.row_factory = sqlite3.Row
+    with get_connection() as verbindung:
         zeiger = verbindung.cursor()
 
         zeiger.execute("""
@@ -335,8 +339,7 @@ def entry():
 
 @app.route("/administration")
 def administration():
-    with sqlite3.connect(DB_FILE) as verbindung:
-        verbindung.row_factory = sqlite3.Row
+    with get_connection() as verbindung:
         zeiger = verbindung.cursor()
         # Sammle alle Bewohner mitsamt Stationennamen
         zeiger.execute("""
@@ -372,7 +375,7 @@ def administration_add():
     # Nur fortfahren wenn alles ausgefüllt ist:
     if not (name and room and station_id): return redirect("/administration")
     
-    with sqlite3.connect(DB_FILE) as verbindung:
+    with get_connection() as verbindung:
         zeiger = verbindung.cursor()
         zeiger.execute("""
                        INSERT INTO
@@ -385,7 +388,7 @@ def administration_add():
 # Bewohner entfernen - GET
 @app.route("/administration/delete/<int:resident_id>")
 def administration_delete(resident_id):
-    with sqlite3.connect(DB_FILE) as verbindung:
+    with get_connection() as verbindung:
         zeiger = verbindung.cursor()
         
         # Bewohner löschen

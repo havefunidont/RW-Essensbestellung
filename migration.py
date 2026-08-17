@@ -2,6 +2,15 @@ import json, sqlite3
 
 DB_FILE = "datenbank.db"
 
+# Gibt die Verbindung zurück:
+def get_connection():
+    verbindung = sqlite3.connect(DB_FILE, timeout=5.0)
+    verbindung.row_factory = sqlite3.Row
+    verbindung.execute("PRAGMA foreign_keys = ON;")
+    verbindung.execute("PRAGMA busy_timeout = 5000;")
+    verbindung.execute("PRAGMA journal_mode = WAL;")
+    return verbindung
+
 # Bewohner laden
 def load_residents():
     with open("residents.json", "r", encoding="utf-8") as f:
@@ -14,7 +23,7 @@ def load_orders():
 
 # Erstelle die Tabellen, wenn sie nicht existieren
 def create_tables_if_not_exist():
-    verbindung = sqlite3.connect(DB_FILE)
+    verbindung = get_connection()
     zeiger = verbindung.cursor()
     
     # Erstelle die DB-Tabellen beim ersten Start
@@ -65,8 +74,7 @@ def main():
     create_tables_if_not_exist()
     
     # Datenbankverbindung herstellen
-    verbindung = sqlite3.connect("datenbank.db")
-    verbindung.execute("PRAGMA foreign_keys = ON;")
+    verbindung = get_connection()
     zeiger = verbindung.cursor()
     
     # Bewohner aus JSON laden:
