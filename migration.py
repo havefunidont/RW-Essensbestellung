@@ -2,7 +2,7 @@ import json, sqlite3
 
 DB_FILE = "datenbank.db"
 
-# Gibt die Verbindung zurück:
+# Hilfsfunktion, gibt die Verbindung zurück:
 def get_connection():
     verbindung = sqlite3.connect(DB_FILE, timeout=5.0)
     verbindung.row_factory = sqlite3.Row

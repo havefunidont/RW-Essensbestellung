@@ -388,15 +388,15 @@ def administration_delete(resident_id):
     with get_connection() as verbindung:
         zeiger = verbindung.cursor()
         
+        # Zuerst alle Bestellungen ebenfalls löschen des Bewohners:
+        zeiger.execute("""
+                    DELETE FROM Orders
+                    WHERE residentID = ?
+                    """, (resident_id,))
+
         # Bewohner löschen
         zeiger.execute("""
                     DELETE FROM Residents
-                    WHERE residentID = ?
-                    """, (resident_id,))
-        
-        # Alle Bestellungen ebenfalls löschen des Bewohners:
-        zeiger.execute("""
-                    DELETE FROM Orders
                     WHERE residentID = ?
                     """, (resident_id,))
         
