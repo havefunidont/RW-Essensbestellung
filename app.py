@@ -145,9 +145,6 @@ def order(resident_id):
     for i in range(7):
         current_date = start_of_week + timedelta(days=i)
         date_str = current_date.isoformat()
-        # Suche bestehende Bestellungen
-        #existing_order = next((o for o in orders if o["resident_id"] == resident_id and o["timestamp"] == date_str), None)
-        
         zeiger.execute("""
                        SELECT *
                        FROM Orders
@@ -381,7 +378,7 @@ def administration_add():
                        INSERT INTO
                        Residents (name, room, stationID)
                        VALUES (?, ?, ?)
-                       """, (name, room, station_id)) # Im Testlauf gibts nur eine Station
+                       """, (name, room, station_id))
    
     return redirect("/administration")
 
