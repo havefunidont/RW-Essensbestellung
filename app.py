@@ -2,10 +2,10 @@ from flask import Flask, render_template, request, redirect, flash
 from datetime import datetime, timedelta
 import sqlite3
 
-# INDEV
+# RELEASE
 
 app = Flask(__name__)
-app.config['TEMPLATES_AUTO_RELOAD'] = True
+# app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 DB_FILE = "datenbank.db"
 
@@ -175,11 +175,12 @@ def overview():
     
     if not date_filter:
         today = datetime.now().date()
-        start_of_week = today - timedelta(days=today.weekday())
+        date_filter = today.isoformat()
+        # start_of_week = today - timedelta(days=today.weekday())
         # Ab Freitag auf die nächste Woches springen
-        if today.weekday() >= 4:
-            start_of_week += timedelta(weeks=1)
-        date_filter = start_of_week.isoformat()
+        # if today.weekday() >= 4:
+        #    start_of_week += timedelta(weeks=1)
+        # date_filter = start_of_week.isoformat()
         
     name_filter = request.args.get("name", "").strip()
         
@@ -405,8 +406,8 @@ def administration_delete(resident_id):
     
 if __name__ == '__main__':
     init_db()
-    # app.run(host='127.0.0.1', port=5000, debug=False)
-    from livereload import Server
-    server = Server(app.wsgi_app)
-    server.watch('.')
-    server.serve(port=5000, liveport=35729, host='0.0.0.0')
+    app.run(host='127.0.0.1', port=5000, debug=False)
+    # from livereload import Server
+    # server = Server(app.wsgi_app)
+    # server.watch('.')
+    #server.serve(port=5000, liveport=35729, host='0.0.0.0')

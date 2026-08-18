@@ -1,7 +1,7 @@
 # Ruhesitz Wetterstein – Digitale Essenswunscherfassung
 
 
-## Änderungen
+## Änderungen - Datenmigration
 >Das System wurde auf SQLite umgestellt. Bitte führen Sie vor dem ersten Ausführen der app.py nach dem Update auf v1.2.0 die migration.py aus, um die Daten aus JSON in die Datenbank zu überführen. Ansonsten kann es zu Datenkonflikten kommen. 
 ```bash
 python migration.py
@@ -37,7 +37,7 @@ http://127.0.0.1:5000
 | **Datenbank** | SQLite3 DB (lokal) |
 | **Port** | 5000 |
 
-## DB Schema
+## Datenbank Schema
 <img width="742" height="272" alt="DB Schema" src="https://github.com/user-attachments/assets/61feaee6-26c4-4593-8fb4-3f6b33924a6e" />
 
 ---
