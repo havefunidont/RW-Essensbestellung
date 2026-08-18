@@ -26,19 +26,20 @@
     
     /* Sekundär- und Neutralelemente */
     --neutral-gray: #e2e8f0;          /* Warmes Grau für sekundäre Badges/Buttons */
-    --neutral-gray-text: #6f6f6f;     /* Textfarbe für sekundäre Elemente */
+    --neutral-gray-text: #4a5568;     /* Textfarbe für sekundäre Elemente (erhöhter Kontrast) */
     --neutral-light-bg: #f8f9fa;      /* Sehr helles Grau für Formularhintergründe */
     
-    /* Statusfarben */
-    --status-success-color: #28a745;  /* Grün für erfasste Bestellungen */
-    --status-success-bg: #e8f5e9;     /* Heller grüner Hintergrund */
-    --status-pending-color: #4a5568;  /* Grau für offene Bestellungen */
-    --status-pending-bg: #e2e8f0;     /* Heller grauer Hintergrund */
+    /* Statusfarben (Barrierefrei angepasst) */
+    --status-success-color: #155724;  /* Dunkelgrün für erfasste Bestellungen (WCAG AA konform) */
+    --status-success-bg: #d4edda;     /* Heller grüner Hintergrund */
+    --status-pending-color: #383d41;  /* Dunkelgrau für offene Bestellungen */
+    --status-pending-bg: #e2e3e5;     /* Heller grauer Hintergrund */
 
     /* UI-Struktur */
     --border-color: #e6e0d6;          /* Weicher, warmer Rahmen */
-    --hover-color: #f3efe7;           /* Subtiles, warmes Hover-Feedback */
+    --hover-color: #dbe7f8;           /* Deutlicheres Hover-Feedback */
     --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05); /* Weicher Tiefeneffekt */
+    --border-radius: 6px;              /* Abgerundete Ecken für Buttons & Karten */
 
     /* Layout-Sizing */
     --max-width: 900px;
@@ -52,13 +53,8 @@ body {
     font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     background: var(--bg-creme);
     color: var(--text-dark);
-    padding: 40px 20px;
     line-height: 1.65;
     font-size: 16px;
-}
-
-p {
-    text-align: center;
 }
 
 
@@ -66,32 +62,24 @@ p {
    HEADER, LOGO & APP-TITEL
    ========================================================================== */
 
-.logo {
+.header {
     max-width: var(--max-width);
-    background-color: var(--wetterstein-blue);
+    background-image: linear-gradient(to bottom, var(--wetterstein-blue), var(--accent-blue-light));
     padding: 10px 15px;
     display: flex;
-    align-items: end;
-    border-top: 2px solid var(--border-color);
-    border-left: 2px solid var(--border-color);
-    border-right: 2px solid var(--border-color);
+    flex-direction: column;
+    gap: 20px;
 }
 
-.logo img {
-    margin: 0 auto; /* Zentriert das Logo-Bild im blauen Header */
+.header img {
+    padding-top: 20px;
+    margin: 0 auto;
 }
 
 h1 {
     font-size: 25px;
     letter-spacing: 0.5px;
-    color: var(--text-dark);
-    background-color: var(--surface-white);
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-bottom: 20px;
-    border-bottom: 2px solid var(--border-color);
-    border-left: 2px solid var(--border-color);
-    border-right: 2px solid var(--border-color);
+    color: var(--surface-white);
     text-align: center;
 }
 
@@ -104,45 +92,34 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    margin-top: 30px;
 }
 
 .action-card {
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 250px;
+    flex: 1 1 250px;
     gap: 15px;
-
     background: var(--neutral-light-bg);
     border: 1px solid var(--border-color);
-    padding: 28px;
-
+    padding: 15px 20px;
+    border-radius: var(--border-radius);
     text-decoration: none;
     color: var(--text-dark);
-    
-    display: flex; /* Flex-Layout sorgt für saubere Ausrichtung der inneren Kachel-Elemente */
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .action-card h2 {
     font-size: 22px;
+    margin-top: auto;
     text-align: left;
-}
-
-.action-card p {
-    font-size: 15px;
-    text-align: left;
-    color: var(--text-muted);
-    line-height: 1.5;
-    flex-grow: 1;
 }
 
 .action-card a {
     margin-top: auto;
     align-self: flex-start;
 }
+
 
 /* ==========================================================================
    LISTEN (Bewohner- & Stationsübersichten)
@@ -176,14 +153,13 @@ li {
     transition: background 0.2s ease;
 }
 
-/* Bewohner-Informationen innerhalb der Listen-Rows */
 .resident-name {
     font-weight: bold;
     margin-right: .5rem;
 }
 
 .resident-details {
-    font-size: smaller;
+    font-size: 0.875rem;
     color: var(--text-muted);
 }
 
@@ -197,16 +173,14 @@ li {
     font-size: 13px;
     font-weight: bold;
     padding: .3rem 1rem;
-    border-radius: 5rem; /* Erzeugt die pillenförmige, runde Form */
+    border-radius: 5rem;
 }
 
-/* Status: Offen */
 .status-pending {
     background-color: var(--status-pending-bg);
     color: var(--status-pending-color);
 }
 
-/* Status: Erfasst */
 .status-finished {
     background-color: var(--status-success-bg);
     color: var(--status-success-color);
@@ -217,12 +191,14 @@ li {
    BUTTONS & LINKS
    ========================================================================== */
 
-/* Primäre Navigationselemente & Buttons */
 a, button {
     font-family: inherit;
     text-align: center;
     font-weight: bold;
     font-size: 15px;
+    min-height: 42px;
+
+    border-radius: var(--border-radius);
     text-decoration: none;
     color: var(--accent-blue-text);
     background: var(--accent-blue-light);
@@ -230,28 +206,30 @@ a, button {
     display: inline-block;
     border: 2px solid transparent;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease, outline 0.1s ease;
 }
 
-/* Standard Hover-Zustand */
 a:hover, button:hover {
-    border: 2px solid black;
+    background-color: var(--hover-color);
 }
 
-/* Sekundäre Button-Variante (z.B. Zurück-Buttons) */
+/* Fokus-Zustand für Tastatur-Navigation */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 3px solid var(--wetterstein-blue);
+    outline-offset: 2px;
+}
+
 .secondary {
     background-color: var(--neutral-gray);
     color: var(--neutral-gray-text);
 }
 
-/* Modifizierter Button-Typ für Anpassungen/Änderungen */
 .change-button {
     background-color: var(--bg-creme);
-    color: #666666;
+    color: var(--text-dark);
     border: 2px solid var(--border-color);
 }
 
-/* Layout-Klasse für Button-Gruppierungen (z.B. in der Küche) */
 .button-bar {
     display: flex;
     width: 100%;
@@ -259,25 +237,24 @@ a:hover, button:hover {
     margin-bottom: var(--gap-sm);
 }
 
-.button-bar > a, button {
+.button-bar > a, .button-bar > button {
     flex: 1;
 }
 
-.button-bar :first-child {
-    flex: 0.5; /* Gibt dem ersten Element (meistens Zurück-Button) eine kompaktere Breite */
+.button-bar > :first-child {
+    flex: 0.5;
 }
 
-.button-bar :only-child {
+.button-bar > :only-child {
     min-width: fit-content;
-    flex: 0.1;
+    flex: 1;
 }
 
 
 /* ==========================================================================
-   FORMULARE & FILTERSYSYTEME
+   FORMULARE & FILTERSYSTEME
    ========================================================================== */
 
-/* Standard-Formular-Container */
 form {
     display: flex;
     flex-wrap: wrap;
@@ -288,7 +265,6 @@ form {
     background-color: var(--neutral-light-bg);
 }
 
-/* Spezialisiertes Filter-Formular (z.B. Bewohnerfilter nach Station/Status) */
 .filter-form {
     display: flex;
     flex-wrap: wrap;
@@ -302,12 +278,13 @@ form {
 }
 
 .filter-form button {
-    flex:0.5;
     align-self: flex-end;
     height: 40px;
+    flex: 1;
 }
+
 .filter-form #week-selection {
-    flex: 35%;
+    flex: 40%;
 }
 
 .form-group {
@@ -324,10 +301,9 @@ form span {
 }
 
 form label {
-    color: #000000;
+    color: var(--text-dark);
 }
 
-/* Eingabefelder-Styling (Inputs, Dropdowns, Textareas) */
 form input[type="date"],
 form input[type="text"],
 form select,
@@ -338,6 +314,7 @@ form textarea {
     background: var(--surface-white);
     border: 1px solid var(--border-color);
     padding: 9px 14px;
+    border-radius: var(--border-radius);
 }
 
 form input[type="date"],
@@ -348,16 +325,12 @@ form select {
 
 form textarea {
     min-height: 80px;
-    resize: vertical; /* Erlaubt vertikale Größenänderung durch den User */
-}
-
-form a:hover {
-    opacity: 0.9;
+    resize: vertical;
 }
 
 
 /* ==========================================================================
-   TABELLEN (Küchen-Produktionslisten & Zusammenfassungen)
+   TABELLEN
    ========================================================================== */
 
 table {
@@ -381,18 +354,16 @@ th {
 
 td {
     padding: 14px 16px;
-    border-bottom: 1px solid var(--border-color);
+    border-right: 2px solid var(--border-color);
     text-align: center;
     font-size: 15px;
     color: var(--text-dark);
 }
 
-/* Ruhiges Zebra-Muster (Abwechselnde Zeilenfarben für bessere Lesbarkeit) */
 tr:nth-child(even) td {
     background: #faf8f5;
 }
 
-/* Entfernt den doppelten Rahmen an der Unterseite der Tabelle */
 tr:last-child td {
     border-bottom: none;
 }
@@ -409,43 +380,50 @@ tr:last-child td {
 
 
 /* ==========================================================================
-   RESPONSIVE DESIGN (Mobiloptimierung für Smartphones & Tablets)
+   RESPONSIVE DESIGN (Mobilgeräte & Tablets)
    ========================================================================== */
 
-@media (max-width: 700px) {
-    /* Schaltet das Dashboard in ein vertikales Grid um */
-    .home-actions {
-        display: grid;
-    }
-    
-    /* Buttons brechen auf Smartphones untereinander um */
-    .button-bar {
-        flex-direction: column;
-    }
-    
-    a, button {
-        max-width: 100vw;
-    }
-    
-    /* Passt die Info-Struktur der Bewohnerzeilen an */
-    .resident-information {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    /* Macht die Status-Badges auf kleineren Displays kompakter */
-    .status-pending, 
-    .status-finished {
-        font-size: 13px;
-        font-weight: bold;
-        padding: .1rem 1rem;
-        max-width: fit-content;
-        border-radius: 5rem;
-    }
-
-    /* Entfernt Rand auf kleinen Bildschirmen */
+@media (min-width: 768px) and (max-width: 1024px) {
     body {
         background-color: var(--surface-white);
         padding: 0;
+    }
+
+    a, button {
+        font-size: 1rem;
+    }
+
+    .home-actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .list-title {
+        font-size: 1.1rem;
+    }
+
+    .resident-information {
+        font-size: 1.1rem;
+    }
+
+    .resident-details {
+        font-size: 1rem;
+    }
+    
+    .status-pending, 
+    .status-finished {
+        font-size: 0.85rem;
+        padding: 6px 14px;
+        max-width: fit-content;
+    }
+
+    th, td,
+    form input[type="date"],
+    form input[type="text"],
+    form select,
+    form textarea {
+        font-size: 1rem;
+        min-height: 46px;
     }
 }

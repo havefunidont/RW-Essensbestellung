@@ -2,8 +2,8 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <title>Küchenübersicht - Essenswünsche vom {{ date_filter.split('-')[2] }}.{{ date_filter.split('-')[1] }}.{{ date_filter.split('-')[0] }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Küchenübersicht - Bestellungen vom {{ date_filter.split('-')[2] }}.{{ date_filter.split('-')[1] }}.{{ date_filter.split('-')[0] }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         /* Druck-Anpassung */
@@ -16,7 +16,7 @@
                 color: black !important;
             }
             /* Alles Unwichtige ausblenden*/
-            .logo, .filter-form, button, a, p {
+            .header img, .filter-form, button, a, p {
                 display: none !important;
                 width: 0 !important;
                 height: 0 !important;
@@ -70,15 +70,12 @@
     </script>
 </head>
 <body>
-<div class="logo">
+<div class="header">
     <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo Ruhesitz Wetterstein" width="300">
+    <h1>Küchenübersicht - Essenswünsche vom {{ date_filter.split('-')[2] }}.{{ date_filter.split('-')[1] }}.{{ date_filter.split('-')[0] }}</h1>
 </div>
-<h1>Küchenübersicht - Bestellungen vom {{ date_filter.split('-')[2] }}.{{ date_filter.split('-')[1] }}.{{ date_filter.split('-')[0] }}</h1>
 <div class="main-section">
     <form method="GET" action="/overview" class="filter-form" onchange="event.preventDefault(); this.closest('form').submit();">
-        <p>
-        Wählen Sie das Datum aus, zu dem Sie die Bestellungen ansehen und ggf. ausdrucken möchten.
-        </p>
         <div class="form-group">
             <label for "date"><b>Datum</b></label>
             <input type="date" id="date" name="date" value="{{ date_filter }}">
