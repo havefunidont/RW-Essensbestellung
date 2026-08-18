@@ -2,20 +2,18 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Essenserfassung - Bestellungen erfassen</title>
+    <title>Essenswunscherfassung - Bestellungen erfassen</title>
     <link
     rel="stylesheet"
     href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="main-section">
-    <div class="logo">
+    <div class="header">
         <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo Ruhesitz Wetterstein" width="300">
+        <h1>Essenswunscherfassung - Bestellungen erfassen</h1>
     </div>
-    <h1>Essenserfassung - Bestellungen erfassen</h1>
+    <div class="main-section">
     <form method="GET" action="/entry" class="filter-form" onchange="this.submit()">
-        <p>Wählen Sie die Station sowie den Bearbeitungsstatus aus, um die Bewohnerliste zu filtern.</p>
-
         <div class="form-group" id="week-selection">
             <label for="week_start"><b>Woche</b></label>
             <select id="week_start" name="week_start" onchange="this.form.submit();">

@@ -8,13 +8,13 @@
     href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="main-section">
-    <div class="logo">
+    <div class="header">
         <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo Ruhesitz Wetterstein" width="300">
+        <h1>Verwaltung - Bewohner verwalten</h1>
     </div>
-    <h1>Verwaltung - Bewohner verwalten</h1>
+
+    <div class="main-section">
     <form method="POST" action="/administration/add" class="filter-form">
-        <p>Geben Sie einen Namen, eine Raumnummer und eine Station ein, um einen Bewohner hinzuzufügen.</p>
 
         <div class="form-group">
             <label for="name"><b>Vor- und Nachname</b></label>

@@ -8,25 +8,25 @@
     href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<div class="main-section">
-    <div class="logo">
+    <div class="header">
         <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo Ruhesitz Wetterstein" width="300">
+        <h1>Digitale Essenswunscherfassung</h1>
     </div>
-    <h1>Digitale Essenswunscherfassung</h1>
-    <div class="home-actions">
-        <div class="action-card">
-            <h2>Essenswunscherfassung</h2>
-            <a href="/entry">Bestellungen erfassen →</a>
+    <div class="main-section">
+        <div class="home-actions">
+            <div class="action-card">
+                <h2>Essenswunscherfassung</h2>
+                <a href="/entry">Bestellungen erfassen →</a>
+            </div>
+            <div class="action-card">
+                <h2>Küche</h2>
+                <a href="/overview">Zur Küchenübersicht →</a>
+            </div>
+            <div class="action-card">
+                <h2>Bewohnerverwaltung</h2>
+                <a href="/administration">Bewohner verwalten →</a>
+            </div>
         </div>
-        <div class="action-card">
-            <h2>Küche</h2>
-            <a href="/overview">Zur Küchenübersicht →</a>
-        </div>
-        <div class="action-card">
-            <h2>Bewohnerverwaltung</h2>
-            <a href="/administration">Bewohner verwalten →</a>
-        </div>
-    </div>
-</div>
+    </div>  
 </body>
 </html>

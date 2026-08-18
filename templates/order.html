@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Bestellung eintragen {{ resident.name }} (Zimmer {{ resident.room }})</title>
+    <title>Bestellung eintragen für {{ resident.name }} (Zimmer {{ resident.room }})</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
@@ -39,21 +39,17 @@
 </head>
 
 <body>
-    <div class="main-section">
-    <div class="logo">
+    <div class="header">
         <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo Ruhesitz Wetterstein" width="300">
+        <h1>Bestellung eintragen für {{ resident.name }} (Zimmer {{ resident.room }})</h1>
     </div>
-    <h1>Bestellung eintragen</h1>
-    <p>
-        Tragen Sie für die gewählte Woche die Essenswünsche von {{ resident.name }} (Zimmer {{ resident.room }}) ein.
-    </p>
-    <br>
+    <div class="main-section">
     <div class="button-bar">
         <a href="/entry?week_start={{ selected_week }}&station={{ request.args.get('station') }}&status={{ request.args.get('status') }}" class="secondary">
             ← Zurück
         </a>
     </div>
-    <br><br>
+    <br>
     <form method="POST">
         <input type="hidden" name="week_start" value="{{ selected_week }}">
         <input type="hidden" name="station" value="{{ request.args.get('station', '') }}">
