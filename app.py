@@ -175,11 +175,12 @@ def overview():
     
     if not date_filter:
         today = datetime.now().date()
-        start_of_week = today - timedelta(days=today.weekday())
+        date_filter = today.isoformat()
+        # start_of_week = today - timedelta(days=today.weekday())
         # Ab Freitag auf die nächste Woches springen
-        if today.weekday() >= 4:
-            start_of_week += timedelta(weeks=1)
-        date_filter = start_of_week.isoformat()
+        # if today.weekday() >= 4:
+        #    start_of_week += timedelta(weeks=1)
+        # date_filter = start_of_week.isoformat()
         
     name_filter = request.args.get("name", "").strip()
         
