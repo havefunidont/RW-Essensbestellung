@@ -354,7 +354,6 @@ th {
 
 td {
     padding: 14px 16px;
-    border-right: 2px solid var(--border-color);
     text-align: center;
     font-size: 15px;
     color: var(--text-dark);
