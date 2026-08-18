@@ -39,6 +39,7 @@
     --border-color: #e6e0d6;          /* Weicher, warmer Rahmen */
     --hover-color: #f3efe7;           /* Subtiles, warmes Hover-Feedback */
     --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05); /* Weicher Tiefeneffekt */
+    --border-radius: 6px;              /* Abgerundete Ecken für Buttons & Karten */
 
     /* Layout-Sizing */
     --max-width: 900px;
@@ -52,7 +53,6 @@ body {
     font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     background: var(--bg-creme);
     color: var(--text-dark);
-    padding: 40px 20px;
     line-height: 1.65;
     font-size: 16px;
 }
@@ -65,32 +65,24 @@ p {
    HEADER, LOGO & APP-TITEL
    ========================================================================== */
 
-.logo {
+.header {
     max-width: var(--max-width);
-    background-color: var(--wetterstein-blue);
+    background-image: linear-gradient(to bottom, var(--wetterstein-blue), var(--accent-blue-light));
     padding: 10px 15px;
     display: flex;
-    align-items: end;
-    border-top: 2px solid var(--border-color);
-    border-left: 2px solid var(--border-color);
-    border-right: 2px solid var(--border-color);
+    flex-direction: column;
+    gap: 20px;
 }
 
-.logo img {
+.header img {
+    padding-top: 20px;
     margin: 0 auto; /* Zentriert das Logo-Bild im blauen Header */
 }
 
 h1 {
     font-size: 25px;
     letter-spacing: 0.5px;
-    color: var(--text-dark);
-    background-color: var(--surface-white);
-    padding-top: 5px;
-    padding-bottom: 5px;
-    margin-bottom: 20px;
-    border-bottom: 2px solid var(--border-color);
-    border-left: 2px solid var(--border-color);
-    border-right: 2px solid var(--border-color);
+    color: var(--surface-white);
     text-align: center;
 }
 
@@ -103,7 +95,6 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    margin-top: 30px;
 }
 
 .action-card {
@@ -114,7 +105,9 @@ h1 {
 
     background: var(--neutral-light-bg);
     border: 1px solid var(--border-color);
-    padding: 28px;
+    padding: 15px 20px;
+
+    border-radius: var(--border-radius);
 
     text-decoration: none;
     color: var(--text-dark);
@@ -127,15 +120,8 @@ h1 {
 
 .action-card h2 {
     font-size: 22px;
+    margin-top: auto;
     text-align: left;
-}
-
-.action-card p {
-    font-size: 15px;
-    text-align: left;
-    color: var(--text-muted);
-    line-height: 1.5;
-    flex-grow: 1;
 }
 
 .action-card a {
@@ -222,6 +208,7 @@ a, button {
     text-align: center;
     font-weight: bold;
     font-size: 15px;
+    border-radius: var(--border-radius);
     text-decoration: none;
     color: var(--accent-blue-text);
     background: var(--accent-blue-light);
@@ -229,12 +216,12 @@ a, button {
     display: inline-block;
     border: 2px solid transparent;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease;
 }
 
 /* Standard Hover-Zustand */
 a:hover, button:hover {
-    border: 2px solid black;
+    background-color: var(--hover-color);
 }
 
 /* Sekundäre Button-Variante (z.B. Zurück-Buttons) */
@@ -268,7 +255,7 @@ a:hover, button:hover {
 
 .button-bar :only-child {
     min-width: fit-content;
-    flex: 0.1;
+    flex: 0.5;
 }
 
 
@@ -411,16 +398,6 @@ tr:last-child td {
    ========================================================================== */
 
 @media (min-width: 768px) and (max-width: 1024px) {
-    /* Schaltet das Dashboard in ein vertikales Grid um */
-    .home-actions {
-        display: grid;
-    }
-    
-    /* Buttons brechen auf Smartphones untereinander um */
-    .button-bar {
-        flex-direction: column;
-    }
-    
     a, button {
         max-width: 100vw;
         font-size: 1.1rem;
