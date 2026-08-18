@@ -2,10 +2,10 @@ from flask import Flask, render_template, request, redirect, flash
 from datetime import datetime, timedelta
 import sqlite3
 
-# INDEV
+# RELEASE
 
 app = Flask(__name__)
-app.config['TEMPLATES_AUTO_RELOAD'] = True
+# app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 DB_FILE = "datenbank.db"
 
@@ -404,8 +404,8 @@ def administration_delete(resident_id):
     
 if __name__ == '__main__':
     init_db()
-    # app.run(host='127.0.0.1', port=5000, debug=False)
-    from livereload import Server
-    server = Server(app.wsgi_app)
-    server.watch('.')
-    server.serve(port=5000, liveport=35729, host='0.0.0.0')
+    app.run(host='127.0.0.1', port=5000, debug=False)
+    # from livereload import Server
+    # server = Server(app.wsgi_app)
+    # server.watch('.')
+    #server.serve(port=5000, liveport=35729, host='0.0.0.0')
