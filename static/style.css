@@ -64,7 +64,7 @@ body {
 
 .header {
     max-width: var(--max-width);
-    background-image: linear-gradient(to bottom, var(--wetterstein-blue), var(--accent-blue-light));
+    background-image: linear-gradient(to bottom, var(--wetterstein-blue), var(--accent-blue-text));
     padding: 10px 15px;
     display: flex;
     flex-direction: column;
@@ -279,7 +279,7 @@ form {
 
 .filter-form button {
     align-self: flex-end;
-    height: 40px;
+    height: 42px;
     flex: 1;
 }
 
@@ -421,7 +421,8 @@ tr:last-child td {
     form input[type="date"],
     form input[type="text"],
     form select,
-    form textarea {
+    form textarea,
+    form button {
         font-size: 1rem;
         min-height: 46px;
     }

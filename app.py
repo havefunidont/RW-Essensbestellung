@@ -66,17 +66,15 @@ def init_db():
 # Startseite
 @app.route("/")
 def index():
-    return render_template(
-        "index.html"
-    )
+    return render_template("index.html")
     
 # Bestellungen
 @app.route("/order/<int:resident_id>", methods=["GET", "POST"])
 def order(resident_id):
     # Suche den Bewohner 
     verbindung = get_connection()
-    
     zeiger = verbindung.cursor()
+
     zeiger.execute("""
                    SELECT *
                    FROM Residents
@@ -176,11 +174,6 @@ def overview():
     if not date_filter:
         today = datetime.now().date()
         date_filter = today.isoformat()
-        # start_of_week = today - timedelta(days=today.weekday())
-        # Ab Freitag auf die nächste Woches springen
-        # if today.weekday() >= 4:
-        #    start_of_week += timedelta(weeks=1)
-        # date_filter = start_of_week.isoformat()
         
     name_filter = request.args.get("name", "").strip()
         
@@ -325,6 +318,8 @@ def entry():
 
             residents.append(res_dict)
 
+        verbindung.close()
+
     return render_template(
         "entry.html",
         residents=residents,
@@ -357,6 +352,7 @@ def administration():
                        ORDER BY name ASC
                        """)
         station_options = zeiger.fetchall()
+        verbindung.close()
 
     return render_template("administration.html", residents=residents, station_options=station_options)
     
@@ -368,11 +364,9 @@ def administration_add():
     room = request.form.get("room", "").strip()
     station_id = request.form.get("station", "").strip()
     
-    print("___HIER")
-    print(station_id)
-    
     # Nur fortfahren wenn alles ausgefüllt ist:
-    if not (name and room and station_id): return redirect("/administration")
+    if not (name and room and station_id): 
+        return redirect("/administration")
     
     with get_connection() as verbindung:
         zeiger = verbindung.cursor()
@@ -381,7 +375,9 @@ def administration_add():
                        Residents (name, room, stationID)
                        VALUES (?, ?, ?)
                        """, (name, room, station_id))
-   
+        verbindung.commit()
+        verbindung.close()
+
     return redirect("/administration")
 
 # Bewohner entfernen - GET
@@ -402,6 +398,9 @@ def administration_delete(resident_id):
                     WHERE residentID = ?
                     """, (resident_id,))
         
+        verbindung.commit()
+        verbindung.close()
+
     return redirect("/administration")
     
 if __name__ == '__main__':
