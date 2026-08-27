@@ -2,7 +2,7 @@
 
 
 ## Änderungen - Datenmigration
->Das System wurde auf SQLite umgestellt. Bitte führen Sie vor dem ersten Ausführen der app.py nach dem Update auf v1.2.0 die migration.py aus, um die Daten aus JSON in die Datenbank zu überführen. Ansonsten kann es zu Datenkonflikten kommen. 
+>Das System wurde auf SQLite umgestellt. Bitte führen Sie vor dem ersten Ausführen der app.py nach dem Update auf v1.2.1 die migration.py aus, um die Daten aus JSON in die Datenbank zu überführen. Ansonsten kann es zu Datenkonflikten kommen. 
 ```bash
 python migration.py
 ```
@@ -34,7 +34,7 @@ http://127.0.0.1:5000
 | Eigenschaft | Details |
 |---|---|
 | **Framework** | Flask  |
-| **Datenbank** | SQLite3 DB (lokal) |
+| **Datenbank** | SQLite3 |
 | **Port** | 5000 |
 
 ## Datenbank Schema
@@ -42,5 +42,5 @@ http://127.0.0.1:5000
 
 ---
 
-**Version**: 1.2.0  
-**Stand**: August 2026
+**Version**: 1.2.1
+**Stand**: 27. August 2026
