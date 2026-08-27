@@ -318,7 +318,7 @@ def entry():
 
             residents.append(res_dict)
 
-        verbindung.close()
+    verbindung.close()
 
     return render_template(
         "entry.html",
@@ -352,7 +352,7 @@ def administration():
                        ORDER BY name ASC
                        """)
         station_options = zeiger.fetchall()
-        verbindung.close()
+    verbindung.close()
 
     return render_template("administration.html", residents=residents, station_options=station_options)
     
@@ -376,7 +376,7 @@ def administration_add():
                        VALUES (?, ?, ?)
                        """, (name, room, station_id))
         verbindung.commit()
-        verbindung.close()
+    verbindung.close()
 
     return redirect("/administration")
 
@@ -399,7 +399,7 @@ def administration_delete(resident_id):
                     """, (resident_id,))
         
         verbindung.commit()
-        verbindung.close()
+    verbindung.close()
 
     return redirect("/administration")
     
