@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS Residents(
+    residentID INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(50),
+    room INTEGER,
+    stationID INTEGER REFERENCES Stations(stationID)
+);
