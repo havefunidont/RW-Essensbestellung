@@ -1,67 +1,12 @@
-from flask import Flask, render_template, request, redirect, flash
+from flask import Flask, render_template, request, redirect
 from datetime import datetime, timedelta
-import sqlite3
+
+from database.database import load_sql, create_tables_if_not_exist, get_connection
 
 # RELEASE
 
 app = Flask(__name__)
 # app.config['TEMPLATES_AUTO_RELOAD'] = True
-
-DB_FILE = "datenbank.db"
-
-def get_connection():
-    verbindung = sqlite3.connect(DB_FILE, timeout=5.0)
-    verbindung.row_factory = sqlite3.Row
-    verbindung.execute("PRAGMA foreign_keys = ON;")
-    verbindung.execute("PRAGMA busy_timeout = 5000;")
-    verbindung.execute("PRAGMA journal_mode = WAL;")
-    return verbindung
-
-# Initialisiere die Datenbank
-def init_db():
-    verbindung = get_connection()
-    zeiger = verbindung.cursor()
-    
-    # Erstelle die DB-Tabellen beim ersten Start
-    zeiger.execute("""
-                   CREATE TABLE IF NOT EXISTS Stations(
-                       stationID INTEGER PRIMARY KEY AUTOINCREMENT,
-                       name VARCHAR(50) UNIQUE
-                   )
-                   """)
-    
-    # Füge die Stationen ein
-    zeiger.execute("INSERT OR IGNORE INTO Stations (name) VALUES ('Betreutes Wohnen')")
-    zeiger.execute("INSERT OR IGNORE INTO Stations (name) VALUES ('Wohngruppe 1')")
-    zeiger.execute("INSERT OR IGNORE INTO Stations (name) VALUES ('Wohngruppe 2')")
-    zeiger.execute("INSERT OR IGNORE INTO Stations (name) VALUES ('Wohngruppe 3')")
-    
-    zeiger.execute("""
-                   CREATE TABLE IF NOT EXISTS Residents(
-                       residentID INTEGER PRIMARY KEY AUTOINCREMENT,
-                       name VARCHAR(50),
-                       room INTEGER,
-                       stationID INTEGER REFERENCES Stations(stationID)
-                   )
-                   """)
-    
-    zeiger.execute("""
-                   CREATE TABLE IF NOT EXISTS Orders(
-                       orderID INTEGER PRIMARY KEY AUTOINCREMENT,
-                       date DATE,
-                       lunch VARCHAR(50),
-                       dinner VARCHAR(50),
-                       halfPortion BOOLEAN,
-                       noSoup BOOLEAN,
-                       notes VARCHAR(100),
-                       residentID INTEGER REFERENCES Residents(residentID),
-                       UNIQUE (residentID, date)
-                   )
-                   """)
-    
-    # Speichere die Änderungen und schließe die Verbindung
-    verbindung.commit()
-    verbindung.close()
     
 # Startseite
 @app.route("/")
@@ -75,13 +20,8 @@ def order(resident_id):
     verbindung = get_connection()
     zeiger = verbindung.cursor()
 
-    zeiger.execute("""
-                   SELECT *
-                   FROM Residents
-                   WHERE residentID = ?
-                   """, (resident_id,))
+    zeiger.execute(load_sql("get_resident_by_id"), (resident_id,))
     resident = zeiger.fetchone()
-    
     verbindung.close()
     
     if resident is None:
@@ -118,11 +58,7 @@ def order(resident_id):
             
             if date_str:
                 # Neue Bestellung einfügen
-                zeiger.execute("""
-                               INSERT OR REPLACE 
-                               INTO orders (date, lunch, dinner, halfPortion, noSoup, notes, residentID)
-                               VALUES (?, ?, ?, ?, ?, ?, ?)
-                               """, (date_str, lunch, dinner, half_portion, no_soup, note, resident_id))
+                zeiger.execute(load_sql("save_order"), (date_str, lunch, dinner, half_portion, no_soup, note, resident_id))
 
         # Am Ende speichern:
         verbindung.commit()
@@ -143,11 +79,7 @@ def order(resident_id):
     for i in range(7):
         current_date = start_of_week + timedelta(days=i)
         date_str = current_date.isoformat()
-        zeiger.execute("""
-                       SELECT *
-                       FROM Orders
-                       WHERE residentID = ? AND date = ?
-                       """, (resident_id, date_str))
+        zeiger.execute(load_sql("get_order_by_resident_and_date"), (resident_id, date_str))
         existing_order = zeiger.fetchone()
         
         days.append({
@@ -182,28 +114,10 @@ def overview():
     
     # Lade die Bestellungen (mit oder ohne Namens Filter)
     if not name_filter:
-        zeiger.execute("""
-                    SELECT Residents.name AS residentName, 
-                    Residents.room AS residentRoom
-                    , Orders.* 
-                    FROM Residents
-                    INNER JOIN Orders
-                    ON Orders.residentID = Residents.residentID
-                    WHERE Orders.date = ? 
-                    ORDER BY Residents.room ASC
-                    """, (date_filter,))
+        zeiger.execute(load_sql("get_overview_all"), (date_filter,))
         filtered_orders_with_residents = zeiger.fetchall()
     else:
-        zeiger.execute("""
-                    SELECT Residents.name AS residentName, 
-                    Residents.room AS residentRoom
-                    , Orders.* 
-                    FROM Residents
-                    INNER JOIN Orders
-                    ON Orders.residentID = Residents.residentID
-                    WHERE Orders.date = ? AND Residents.name LIKE ?
-                    ORDER BY Residents.room ASC
-                    """, (date_filter, f'%{name_filter}%'))
+        zeiger.execute(load_sql("get_overview_by_name"), (date_filter, f'%{name_filter}%'))
         filtered_orders_with_residents = zeiger.fetchall()
     
     verbindung.close()
@@ -270,30 +184,15 @@ def entry():
     with get_connection() as verbindung:
         zeiger = verbindung.cursor()
 
-        zeiger.execute("""
-                       SELECT * 
-                       FROM Stations 
-                       ORDER BY name ASC
-                       """)
+        zeiger.execute(load_sql("get_stations_all"))
         station_options = zeiger.fetchall()
         
-        query = """
-            SELECT 
-                Residents.residentID,
-                Residents.name,
-                Residents.room,
-                Stations.name AS station,
-                COUNT(DISTINCT Orders.date) AS order_count
-            FROM Residents
-            INNER JOIN Stations ON Stations.stationID = Residents.stationID
-            LEFT JOIN Orders ON Orders.residentID = Residents.residentID 
-                            AND Orders.date BETWEEN ? AND ?
-        """
+        query = load_sql("get_entry_residents")
         params = [start_date.isoformat(), end_date.isoformat()]
 
         # Identifikation über ID:
         if station_id is not None:
-            query += " WHERE Stations.stationID = ?"
+            query += "WHERE Stations.stationID = ?"
             params.append(station_id)
 
         query += """
@@ -336,21 +235,11 @@ def administration():
     with get_connection() as verbindung:
         zeiger = verbindung.cursor()
         # Sammle alle Bewohner mitsamt Stationennamen
-        zeiger.execute("""
-                       SELECT Residents.*, Stations.name AS station
-                       FROM Residents
-                       INNER JOIN Stations 
-                       ON Stations.stationID = Residents.stationID
-                       ORDER BY Residents.room ASC
-                       """)
+        zeiger.execute(load_sql("get_administration_residents"))
         residents = zeiger.fetchall()
         
         # Sammle alle Stationsoptionen (ID, Name)
-        zeiger.execute("""
-                       SELECT *
-                       FROM Stations
-                       ORDER BY name ASC
-                       """)
+        zeiger.execute(load_sql("get_stations_all"))
         station_options = zeiger.fetchall()
     verbindung.close()
 
@@ -370,11 +259,7 @@ def administration_add():
     
     with get_connection() as verbindung:
         zeiger = verbindung.cursor()
-        zeiger.execute("""
-                       INSERT INTO
-                       Residents (name, room, stationID)
-                       VALUES (?, ?, ?)
-                       """, (name, room, station_id))
+        zeiger.execute(load_sql("add_resident"), (name, room, station_id))
         verbindung.commit()
     verbindung.close()
 
@@ -387,16 +272,10 @@ def administration_delete(resident_id):
         zeiger = verbindung.cursor()
         
         # Zuerst alle Bestellungen ebenfalls löschen des Bewohners:
-        zeiger.execute("""
-                    DELETE FROM Orders
-                    WHERE residentID = ?
-                    """, (resident_id,))
+        zeiger.execute(load_sql("delete_orders_by_resident"), (resident_id,))
 
         # Bewohner löschen
-        zeiger.execute("""
-                    DELETE FROM Residents
-                    WHERE residentID = ?
-                    """, (resident_id,))
+        zeiger.execute(load_sql("delete_resident"), (resident_id,))
         
         verbindung.commit()
     verbindung.close()
@@ -404,7 +283,7 @@ def administration_delete(resident_id):
     return redirect("/administration")
     
 if __name__ == '__main__':
-    init_db()
+    create_tables_if_not_exist()
     app.run(host='127.0.0.1', port=5000, debug=False)
     # from livereload import Server
     # server = Server(app.wsgi_app)
