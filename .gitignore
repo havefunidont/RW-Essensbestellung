@@ -1,0 +1,19 @@
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual Environments (falls genutzt)
+venv/
+.venv/
+env/
+
+# SQLite Datenbanken (lokale Testdaten)
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# IDE / Editor Einstellungen
+.vscode/
+.idea/

@@ -1,15 +1,6 @@
-import json, sqlite3
+import json
 
-DB_FILE = "datenbank.db"
-
-# Hilfsfunktion, gibt die Verbindung zurück:
-def get_connection():
-    verbindung = sqlite3.connect(DB_FILE, timeout=5.0)
-    verbindung.row_factory = sqlite3.Row
-    verbindung.execute("PRAGMA foreign_keys = ON;")
-    verbindung.execute("PRAGMA busy_timeout = 5000;")
-    verbindung.execute("PRAGMA journal_mode = WAL;")
-    return verbindung
+from database.database import get_connection, create_tables_if_not_exist
 
 # Bewohner laden
 def load_residents():
@@ -21,55 +12,10 @@ def load_orders():
     with open("orders.json", "r", encoding="utf-8") as f:
         return json.load(f)
 
-# Erstelle die Tabellen, wenn sie nicht existieren
-def create_tables_if_not_exist():
-    verbindung = get_connection()
-    zeiger = verbindung.cursor()
-    
-    # Erstelle die DB-Tabellen beim ersten Start
-    zeiger.execute("""
-                   CREATE TABLE IF NOT EXISTS Stations(
-                       stationID INTEGER PRIMARY KEY AUTOINCREMENT,
-                       name VARCHAR(50) UNIQUE
-                   )
-                   """)
-    
-    # Füge die Stationen ein
-    zeiger.execute("INSERT OR IGNORE INTO Stations (name) VALUES ('Betreutes Wohnen')")
-    zeiger.execute("INSERT OR IGNORE INTO Stations (name) VALUES ('Wohngruppe 1')")
-    zeiger.execute("INSERT OR IGNORE INTO Stations (name) VALUES ('Wohngruppe 2')")
-    zeiger.execute("INSERT OR IGNORE INTO Stations (name) VALUES ('Wohngruppe 3')")
-    
-    zeiger.execute("""
-                   CREATE TABLE IF NOT EXISTS Residents(
-                       residentID INTEGER PRIMARY KEY AUTOINCREMENT,
-                       name VARCHAR(50),
-                       room INTEGER,
-                       stationID INTEGER REFERENCES Stations(stationID)
-                   )
-                   """)
-    
-    zeiger.execute("""
-                   CREATE TABLE IF NOT EXISTS Orders(
-                       orderID INTEGER PRIMARY KEY AUTOINCREMENT,
-                       date DATE,
-                       lunch VARCHAR(50),
-                       dinner VARCHAR(50),
-                       halfPortion BOOLEAN,
-                       noSoup BOOLEAN,
-                       notes VARCHAR(100),
-                       residentID INTEGER REFERENCES Residents(residentID),
-                       UNIQUE (residentID, date)
-                   )
-                   """)
-    
-    # Speichere die Änderungen und schließe die Verbindung
-    verbindung.commit()
-    verbindung.close()
-
 # Lade die JSON Daten und schreibe sie in die DB:
 def main():
     print("Start der Migration zu SQL")
+
     # Erstelle die Tabellen falls das Migration script ausgeführt wird vor app.py:
     create_tables_if_not_exist()
     
@@ -113,10 +59,8 @@ def main():
 
     # Speichere die Bewohner Bestellungen in der DB:
     verbindung.commit()
-    
     verbindung.close()
     print("Ende der Migration zu SQL")
 
 if __name__ == "__main__":
     main()
-    
