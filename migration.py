@@ -1,6 +1,6 @@
 import json
 
-from database.database import get_connection, create_tables_if_not_exist
+from database.database import load_sql, get_connection, create_tables_if_not_exist
 
 # Bewohner laden
 def load_residents():
@@ -32,11 +32,7 @@ def main():
         resident_room = int(resident["room"])
         resident_stationID = 1 # Vor Umstellung existierte nur Betreutes Wohnen als Station
 
-        zeiger.execute("""
-                       INSERT OR IGNORE INTO
-                       Residents (residentID, name, room, stationID) 
-                       VALUES (?, ?, ?, ?)
-                       """, (resident_id, resident_name, resident_room, resident_stationID))
+        zeiger.execute(load_sql("migrate_resident"), (resident_id, resident_name, resident_room, resident_stationID))
     
     # Bestellungen aus JSON laden:
     orders = load_orders()
@@ -51,11 +47,7 @@ def main():
         order_notes = order.get("notes", "")
         order_resident_ID = order["resident_id"] # FK speichern
         
-        zeiger.execute("""
-                       INSERT OR IGNORE INTO
-                       Orders (date, lunch, dinner, halfPortion, noSoup, notes, residentID)
-                       VALUES (?, ?, ?, ?, ?, ?, ?)
-                       """, (order_date, order_lunch, order_dinner, order_halfPortion, order_noSoup, order_notes, order_resident_ID)) 
+        zeiger.execute(load_sql("migrate_order"), (order_date, order_lunch, order_dinner, order_halfPortion, order_noSoup, order_notes, order_resident_ID)) 
 
     # Speichere die Bewohner Bestellungen in der DB:
     verbindung.commit()
