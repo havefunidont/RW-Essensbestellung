@@ -26,12 +26,12 @@ python migration.py
 ```bash
 pip install -r requirements.txt
 ```
-### 2. Migration ausführen (nur bei Update von 1.1.0 oder älter)
+#### 2. Migration ausführen (nur bei Update von 1.1.0 oder älter)
 ```bash
 python migration.py
 ```
 
-#### 2. Anwendung starten
+#### 3. Anwendung starten
 ```bash
 python app.py
 ```
