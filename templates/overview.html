@@ -99,6 +99,7 @@
             </tr>
 
             {% for order in orders %}
+                {% if order.lunch != 'Kein Essen' %}
             <tr>
                 <td>{{ order.residentRoom }}</td>
                 <td>{{ order.residentName }}</td>
@@ -127,6 +128,7 @@
 
                 <!--<td>{{ order.timestamp }}</td>-->
             </tr>
+                {% endif %}
             {% endfor %}
 
         </table>
@@ -161,6 +163,7 @@
             </tr>
 
             {% for order in orders %}
+                {% if order.dinner != 'Kein Essen' %}
             <tr>
                 <td>{{ order.residentRoom }}</td>
                 <td>{{ order.residentName }}</td>
@@ -189,6 +192,7 @@
 
                 <!--<td>{{ order.timestamp }}</td>-->
             </tr>
+                {% endif %}
             {% endfor %}
 
         </table>
