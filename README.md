@@ -2,8 +2,9 @@
 
 ## Changelog
 
-### Version 1.3.0 (Pre-Release) - *September 2026*
+### Version 1.3.0 - *Oktober 2026*
 * **Auslagerung der SQL-Dateien:** Sämtliche Inline-SQL-Queries wurden aus `app.py` entfernt und übersichtlich unter `database/sql/queries/` abgelegt.
+* **Trennung von Mittag- und Abendessen:** Seperate Hinweisfelder sind vorhanden, seperate Zusatzoptionen wie "halbe Portion". Zudem erscheinen Bewohner, bei denen kein Essen ausgewählt wurde nicht in der Küchenübersicht für die jeweilige Übersicht (Mittag/Abend) am jeweiligen Tag.
 * **Architektur:** Einführung des `database/`-Pakets inkl. `database.py` für die zentrale Verwaltung von Verbindungen, Schema-Initialisierung (`database/sql/schema/`) und der Hilfsfunktion `load_sql()`.
 * **Repository:** `.gitignore` hinzugefügt, um lokale Entwicklungsdatenbanken (`*.db`) und Python-Cache (`__pycache__`) aus der Versionsverwaltung auszuschließen.
 
