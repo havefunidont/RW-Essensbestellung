@@ -52,13 +52,40 @@ def order(resident_id):
             date_str = request.form.get(f"date_{i}")
             lunch = request.form.get(f"lunch_{i}")
             dinner = request.form.get(f"dinner_{i}")
-            note = request.form.get(f"notes_{i}", "").strip()
-            half_portion = f"half_portion_{i}" in request.form
-            no_soup = f"no_soup_{i}" in request.form
+            lunch_note = request.form.get(f"lunch_notes_{i}", "").strip()
+            dinner_note = request.form.get(f"dinner_notes_{i}", "").strip()
+            legacy_note = " | ".join(
+                note
+                for note in (
+                    f"Mittag: {lunch_note}" if lunch_note else "",
+                    f"Abend: {dinner_note}" if dinner_note else "",
+                )
+                if note
+            )
+            lunch_half_portion = f"half_portion_lunch_{i}" in request.form
+            dinner_half_portion = f"half_portion_dinner_{i}" in request.form
+            lunch_no_soup = f"no_soup_lunch_{i}" in request.form
+            dinner_no_soup = f"no_soup_dinner_{i}" in request.form
+            no_dessert = f"no_dessert_{i}" in request.form
             
             if date_str:
                 # Neue Bestellung einfügen
-                zeiger.execute(load_sql("save_order"), (date_str, lunch, dinner, half_portion, no_soup, note, resident_id))
+                zeiger.execute(load_sql("save_order"), (
+                    date_str,
+                    lunch,
+                    dinner,
+                    lunch_half_portion or dinner_half_portion,
+                    lunch_no_soup or dinner_no_soup,
+                    lunch_half_portion,
+                    dinner_half_portion,
+                    lunch_no_soup,
+                    dinner_no_soup,
+                    no_dessert,
+                    legacy_note,
+                    lunch_note,
+                    dinner_note,
+                    resident_id,
+                ))
 
         # Am Ende speichern:
         verbindung.commit()
@@ -89,9 +116,13 @@ def order(resident_id):
             "day_name": wochentage[i],
             "saved_lunch": existing_order["lunch"] if existing_order else "",
             "saved_dinner": existing_order["dinner"] if existing_order else "",
-            "saved_notes": existing_order["notes"] if existing_order else "",
-            "saved_half_portion": bool(existing_order["halfPortion"]) if existing_order else False,
-            "saved_no_soup": bool(existing_order["noSoup"]) if existing_order else False
+            "saved_lunch_notes": existing_order["lunchNotes"] if existing_order else "",
+            "saved_dinner_notes": existing_order["dinnerNotes"] if existing_order else "",
+            "saved_lunch_half_portion": bool(existing_order["lunchHalfPortion"]) if existing_order else False,
+            "saved_dinner_half_portion": bool(existing_order["dinnerHalfPortion"]) if existing_order else False,
+            "saved_lunch_no_soup": bool(existing_order["lunchNoSoup"]) if existing_order else False,
+            "saved_dinner_no_soup": bool(existing_order["dinnerNoSoup"]) if existing_order else False,
+            "saved_no_dessert": bool(existing_order["noDessert"]) if existing_order else False
         })
 
     verbindung.close()

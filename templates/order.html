@@ -60,7 +60,6 @@
                     <th>Tag</th>
                     <th>Mittagessen</th>
                     <th>Abendessen</th>
-                    <th>Hinweise</th>
                 </tr>
             </thead>
 
@@ -87,6 +86,35 @@
                             <input type="radio" name="lunch_{{ day.index }}" value="Kein Essen" {% if day.saved_lunch == 'Kein Essen' %}checked{% endif %}>
                             Kein Essen
                         </label>
+                        <br>
+                        <label>
+                            <input type="radio" name="lunch_{{ day.index }}" value="Restaurant" {% if day.saved_lunch == 'Restaurant' %}checked{% endif %}>
+                            Restaurant
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" name="half_portion_lunch_{{ day.index }}" value="Ja" {% if day.saved_lunch_half_portion %}checked{% endif %}>
+                            Halbe Portion
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" name="no_soup_lunch_{{ day.index }}" value="Ja" {% if day.saved_lunch_no_soup %}checked{% endif %}>
+                            Ohne Suppe
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" name="no_dessert_{{ day.index }}" value="Ja" {% if day.saved_no_dessert %}checked{% endif %}>
+                            Kein Dessert
+                        </label>
+                        <br>
+                        <textarea
+                            id="lunch_notes_{{ day.index }}"
+                            name="lunch_notes_{{ day.index }}"
+                            aria-label="Hinweise Mittagessen"
+                            rows="4"
+                            cols="20"
+                            placeholder="z.B. keine Nüsse, laktosefrei..."
+                        >{{ day.saved_lunch_notes }}</textarea>
                     </td>
 
                     <td>
@@ -102,32 +130,30 @@
                             <input type="radio" name="dinner_{{ day.index }}" value="Kein Essen" {% if day.saved_dinner == 'Kein Essen' %}checked{% endif %}>
                             Kein Essen
                         </label>
-                    </td>
-
-                    <td>
+                        <br>
                         <label>
-                            <input type="checkbox"
-                                name="half_portion_{{ day.index }}"
-                                value="Ja"
-                                {% if day.saved_half_portion %}checked{% endif %}>
+                            <input type="radio" name="dinner_{{ day.index }}" value="Restaurant" {% if day.saved_dinner == 'Restaurant' %}checked{% endif %}>
+                            Restaurant
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" name="half_portion_dinner_{{ day.index }}" value="Ja" {% if day.saved_dinner_half_portion %}checked{% endif %}>
                             Halbe Portion
                         </label>
                         <br>
                         <label>
-                            <input type="checkbox"
-                                name="no_soup_{{ day.index }}"
-                                value="Ja"
-                                {% if day.saved_no_soup %}checked{% endif %}>
+                            <input type="checkbox" name="no_soup_dinner_{{ day.index }}" value="Ja" {% if day.saved_dinner_no_soup %}checked{% endif %}>
                             Ohne Suppe
                         </label>
                         <br>
                         <textarea
-                            id="notes_{{ day.index }}"
-                            name="notes_{{ day.index }}"
+                            id="dinner_notes_{{ day.index }}"
+                            name="dinner_notes_{{ day.index }}"
+                            aria-label="Hinweise Abendessen"
                             rows="4"
                             cols="20"
                             placeholder="z.B. keine Nüsse, laktosefrei..."
-                        >{{ day.saved_notes }}</textarea>
+                        >{{ day.saved_dinner_notes }}</textarea>
                     </td>
                 </tr>
             {% endfor %}
