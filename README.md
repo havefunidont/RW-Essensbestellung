@@ -1,4 +1,4 @@
-# Ruhesitz Wetterstein – Digitale Essenswunscherfassung
+# RW – Digitale Essenswunscherfassung
 
 ## Changelog
 
