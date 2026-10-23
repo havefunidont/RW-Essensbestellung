@@ -54,5 +54,5 @@ http://127.0.0.1:5000
 
 ---
 
-**Version**: 1.3.0 (Pre-Release)
-**Stand**: 22. September 2026
+**Version**: 1.3.0
+**Stand**: 23. Oktober 2026
