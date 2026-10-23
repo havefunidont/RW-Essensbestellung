@@ -47,7 +47,22 @@ def main():
         order_notes = order.get("notes", "")
         order_resident_ID = order["resident_id"] # FK speichern
         
-        zeiger.execute(load_sql("migrate_order"), (order_date, order_lunch, order_dinner, order_halfPortion, order_noSoup, order_notes, order_resident_ID)) 
+        zeiger.execute(load_sql("migrate_order"), (
+            order_date,
+            order_lunch,
+            order_dinner,
+            order_halfPortion,
+            order_noSoup,
+            order_halfPortion,
+            order_halfPortion,
+            order_noSoup,
+            order_noSoup,
+            False,
+            order_notes,
+            order_notes,
+            order_notes,
+            order_resident_ID,
+        ))
 
     # Speichere die Bewohner Bestellungen in der DB:
     verbindung.commit()

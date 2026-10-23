@@ -109,19 +109,23 @@
                 </td>
 
                 <td>
-                    {% if order.halfPortion %}
+                    {% if order.lunchHalfPortion %}
                         Halbe Portion<br>
                     {% endif %}
                     
-                    {% if order.noSoup %}
+                    {% if order.lunchNoSoup %}
                         Ohne Suppe<br>
                     {% endif %}
 
-                    {% if order.notes %}
-                        {{ order.notes }}
+                    {% if order.noDessert %}
+                        Kein Dessert<br>
                     {% endif %}
 
-                    {% if not order.halfPortion and not order.noSoup and not order.notes%}
+                    {% if order.lunchNotes %}
+                        {{ order.lunchNotes }}
+                    {% endif %}
+
+                    {% if not order.lunchHalfPortion and not order.lunchNoSoup and not order.noDessert and not order.lunchNotes%}
                         -/- 
                     {% endif %}
                 </td>
@@ -173,19 +177,19 @@
                 </td>
 
                 <td>
-                    {% if order.halfPortion %}
+                    {% if order.dinnerHalfPortion %}
                         Halbe Portion<br>
                     {% endif %}
                     
-                    {% if order.noSoup %}
+                    {% if order.dinnerNoSoup %}
                         Ohne Suppe<br>
                     {% endif %}
 
-                    {% if order.notes %}
-                        {{ order.notes }}
+                    {% if order.dinnerNotes %}
+                        {{ order.dinnerNotes }}
                     {% endif %}
 
-                    {% if not order.halfPortion and not order.noSoup and not order.notes%}
+                    {% if not order.dinnerHalfPortion and not order.dinnerNoSoup and not order.dinnerNotes%}
                         -/- 
                     {% endif %}
                 </td>

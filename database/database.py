@@ -26,6 +26,30 @@ def execute_schema_file(cursor, file_name):
         sql_script = f.read()
     cursor.executescript(sql_script)
 
+def ensure_order_columns(cursor):
+    legacy_columns = {
+        "lunchHalfPortion": "halfPortion",
+        "dinnerHalfPortion": "halfPortion",
+        "lunchNoSoup": "noSoup",
+        "dinnerNoSoup": "noSoup",
+        "noDessert": None,
+        "lunchNotes": "notes",
+        "dinnerNotes": "notes",
+    }
+    columns = {row["name"] for row in cursor.execute("PRAGMA table_info(Orders)")}
+
+    for column, legacy_column in legacy_columns.items():
+        if column in columns:
+            continue
+
+        column_type = "VARCHAR(100) DEFAULT ''" if column.endswith("Notes") else "BOOLEAN DEFAULT 0"
+        cursor.execute(f"ALTER TABLE Orders ADD COLUMN {column} {column_type}")
+        if legacy_column:
+            fallback = "''" if column.endswith("Notes") else "0"
+            cursor.execute(
+                f"UPDATE Orders SET {column} = COALESCE({legacy_column}, {fallback})"
+            )
+
 def create_tables_if_not_exist():
     verbindung = get_connection()
     zeiger = verbindung.cursor()
@@ -34,6 +58,7 @@ def create_tables_if_not_exist():
     execute_schema_file(zeiger, "stations.sql")
     execute_schema_file(zeiger, "residents.sql")
     execute_schema_file(zeiger, "orders.sql")
+    ensure_order_columns(zeiger)
 
     # Füge die Stationen ein
     zeiger.execute("INSERT OR IGNORE INTO Stations (name) VALUES ('Betreutes Wohnen')")
