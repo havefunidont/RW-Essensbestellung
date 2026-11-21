@@ -3,7 +3,7 @@
 Interne Webanwendung für die **Ruhesitz Wetterstein gGmbH** zur Erfassung, Verwaltung und Küchenübersicht der täglichen Essenswünsche von Bewohnerinnen und Bewohnern.
 
 ## Funktionsumfang
-- **Für Pflegekräfte**: Strukturierte und intuitive Erfassung der Essenswünsche, mit detaillierten Auswahl- und Zusatzoptionen sowie seperaten Hinweisfeldern.
+- **Für Pflegekräfte**: Strukturierte und intuitive Erfassung der Essenswünsche, mit detaillierten Auswahl- und Zusatzoptionen sowie separaten Hinweisfeldern.
 - **Für die Küche**: Automatische Berechnung der gesamten Essenswünsche für das gewählte Datum automatisch nach Menü und Mahlzeit. Übersichtliche Liste mit Bewohnername, Essenswunsch und Zimmer mit direkter Druckfunktion.
 - **Für die Verwaltung**: Einfaches Eintragen und Löschen von Bewohern. Relationales Datenmodell, inklusiver einfacher Backup-Möglichkeit.
 
