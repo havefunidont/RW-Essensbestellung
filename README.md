@@ -8,9 +8,9 @@ Interne Webanwendung für die **Ruhesitz Wetterstein gGmbH** zur Erfassung, Verw
 - **Für die Verwaltung**: Einfaches Eintragen und Löschen von Bewohern. Relationales Datenmodell, inklusiver einfacher Backup-Möglichkeit.
 
 ## Einblicke in die Anwendung
-1. Startseite
-2. Essenswunscherfassung
-3. Küchenübersicht
+![Startseite]<img width="3040" height="1756" alt="grafik" src="https://github.com/user-attachments/assets/a3f2ebdd-f654-43c9-b12f-5c0d33e7ff77" />
+![Essenswunscherfassung]<img width="3040" height="1756" alt="grafik" src="https://github.com/user-attachments/assets/bf49f9c1-0d65-454d-8fe7-798bfcfd92b3" /> 
+![Küchenübersicht]<img width="3040" height="1756" alt="grafik" src="https://github.com/user-attachments/assets/75f5220c-0134-4be1-923d-e1b4ad6a94be" />
 
 ## Technologie
 | Eigenschaft | Details |
