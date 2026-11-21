@@ -9,7 +9,7 @@ Interne Webanwendung für die **Ruhesitz Wetterstein gGmbH** zur Erfassung, Verw
 
 ## Einblicke in die Anwendung
 <img width="3040" height="1756" alt="grafik" src="https://github.com/user-attachments/assets/a3f2ebdd-f654-43c9-b12f-5c0d33e7ff77" />
-<img width="3040" height="1756" alt="grafik" src="https://github.com/user-attachments/assets/bf49f9c1-0d65-454d-8fe7-798bfcfd92b3" /> 
+<img width="3040" height="1756" alt="grafik" src="https://github.com/user-attachments/assets/d5f446f5-5d23-4d76-86c1-d48354c0d038" />
 <img width="3040" height="1756" alt="grafik" src="https://github.com/user-attachments/assets/75f5220c-0134-4be1-923d-e1b4ad6a94be" />
 
 ## Technologie
