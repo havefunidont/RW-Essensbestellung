@@ -1,5 +1,50 @@
 # RW – Digitale Essenswunscherfassung
 
+Interne Webanwendung für die **Ruhesitz Wetterstein gGmbH** zur Erfassung, Verwaltung und Küchenübersicht der täglichen Essenswünsche von Bewohnerinnen und Bewohnern.
+
+## Funktionsumfang
+- **Für Pflegekräfte**: Strukturierte und intuitive Erfassung der Essenswünsche, mit detaillierten Auswahl- und Zusatzoptionen sowie seperaten Hinweisfeldern.
+- **Für die Küche**: Automatische Berechnung der gesamten Essenswünsche für das gewählte Datum automatisch nach Menü und Mahlzeit. Übersichtliche Liste mit Bewohnername, Essenswunsch und Zimmer mit direkter Druckfunktion.
+- **Für die Verwaltung**: Einfaches Eintragen und Löschen von Bewohern. Relationales Datenmodell, inklusiver einfacher Backup-Möglichkeit.
+
+## Einblicke in die Anwendung
+1. Startseite
+2. Essenswunscherfassung
+3. Küchenübersicht
+
+## Technologie
+| Eigenschaft | Details |
+|---|---|
+| **Framework** | Flask  |
+| **Datenbank** | SQLite3 |
+| **Host/Port** | 127.0.0.1:5000 |
+
+## Installation
+### Voraussetzungen
+- **Python 3.8+** installiert
+- Terminal/Kommandozeile
+### Schritt-für-Schritt Anleitung
+#### 1. Abhängigkeiten installieren
+```bash
+pip install -r requirements.txt
+```
+#### 2. Datenmigration ausführen (nur erforderlich bei Update von v1.1.0 oder älter)
+```bash
+python migration.py
+```
+#### 3. Anwendung starten
+```bash
+python app.py
+```
+
+Die Anwendung ist anschließend im Browser erreichbar unter:
+```
+http://127.0.0.1:5000
+```
+
+## Datenbankarchitektur
+<img width="742" height="272" alt="DB Schema" src="https://github.com/user-attachments/assets/61feaee6-26c4-4593-8fb4-3f6b33924a6e" />
+
 ## Changelog
 
 ### Version 1.3.0 - *Oktober 2026*
@@ -15,44 +60,8 @@
 python migration.py
 ```
 
-## Installation
-
-### Voraussetzungen
-- **Python 3.8+** installiert
-- Terminal/Kommandozeile
-
-### Schritt-für-Schritt Anleitung
-
-#### 1. Abhängigkeiten installieren
-```bash
-pip install -r requirements.txt
-```
-#### 2. Migration ausführen (nur bei Update von 1.1.0 oder älter)
-```bash
-python migration.py
-```
-
-#### 3. Anwendung starten
-```bash
-python app.py
-```
-
-Die Anwendung ist im Browser erreichbar unter:
-```
-http://127.0.0.1:5000
-```
-## Technische Details
-
-| Eigenschaft | Details |
-|---|---|
-| **Framework** | Flask  |
-| **Datenbank** | SQLite3 |
-| **Host/Port** | 127.0.0.1:5000 |
-
-## Datenbank Schema (vereinfacht)
-<img width="742" height="272" alt="DB Schema" src="https://github.com/user-attachments/assets/61feaee6-26c4-4593-8fb4-3f6b33924a6e" />
-
 ---
 
 **Version**: 1.3.0
-**Stand**: 23. Oktober 2026
+**Letzte Aktualisierung**: 21. November 2026
+**Entwicklung und Wartung**: Cosmo Caruso
