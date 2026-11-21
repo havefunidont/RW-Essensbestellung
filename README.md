@@ -43,7 +43,7 @@ http://127.0.0.1:5000
 ```
 
 ## Datenbankarchitektur
-<img width="742" height="272" alt="DB Schema" src="https://github.com/user-attachments/assets/61feaee6-26c4-4593-8fb4-3f6b33924a6e" />
+<img width="762" height="392" alt="rw-essensbestellung-db-schema" src="https://github.com/user-attachments/assets/ed4b7f77-d569-4772-8312-2f00d4b90f64" />
 
 ## Changelog
 
